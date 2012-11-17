@@ -1,4 +1,8 @@
 TonightsPlaylistApp::Application.routes.draw do
+  get "home/index"
+
+  match '/' => "home#index"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
