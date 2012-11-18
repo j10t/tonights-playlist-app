@@ -54,7 +54,9 @@ class HomeController < ApplicationController
         event['tracks'] << track unless track['track_source_id'].blank? || track['song_title'].blank? || track['artist'].blank?
       end # for each track loop
 
-      @playlist << event;
+      if !event['tracks'].blank?
+        @playlist << event;
+      end
     end # for each event loop
 
     # randomize
