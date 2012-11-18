@@ -9,7 +9,7 @@ html {
 }
 
 body {
-  background-color: #222;
+  background: #333 url(<%= asset_path 'crosshatch-bg.png' %>) repeat;
   padding: 0;
 }
 
@@ -36,6 +36,13 @@ li.playback-button {
 .navbar {
 
 }
+
+[class^="icon-"],
+[class*=" icon-"] {
+  vertical-align: text-top;
+  background-image: url(<%= asset_path 'glyphicons-halflings.png' %>);
+}
+
 //NAVBAR
 
 .navbar {
@@ -48,24 +55,32 @@ li.playback-button {
     margin: 0;
     background-image: none;
     background-color: #000;
-    @include single-box-shadow(rgba(0,0,0,.25), 0, 20px, 20px, 0, false);
+    @include single-box-shadow(rgba(0,0,0,.15), 0, 10px, 20px, 0, false);
     .navbar-progress {
-      width: 25%;
+      z-index: 9999;
+      width: 0%;
       position: absolute;
       height: 100%;
       padding: 0;
       margin: 0;
       float: left;
-      background-color: rgba(255,255,255, .25);
+      background-color: white;
+      @include opacity(.2);
       @include single-transition(width, .25s, linear, false);
     }
     .container {
+      position: relative;
+      z-index: 999999;
       height: 100%;
       width: 830px;
       .brand {
-        margin: 0;
+        display: inline-block;
+        width: 233px;
+        height: 80px;
+        margin: 10px 0;
         padding: 0;
         float: right;
+        background: transparent url(<%= asset_path 'logo-large.png' %>) no-repeat;
       }
       ul {
         li {
@@ -76,15 +91,20 @@ li.playback-button {
   }
 }
 
+//PLAYBACK CONTROLS
+
 .playback-controls {
   li > a.playback-button {
     float: left;
     display: inline-block;
     position: relative;
-    @include opacity(.8);
     @include single-transition(opacity, .1s, linear, false);
+    @include opacity(.8);
     &:hover {
       @include opacity(1);
+    }
+    &:active {
+      margin-bottom: -2px;
     }
     &.playback-play {
       top: 50px;
@@ -108,7 +128,39 @@ li.playback-button {
   }
 }
 
+//PLAYBACK INFO
+
+.playback-info {
+  width: 450px;
+  float:left;
+  display: inline-block;
+  margin: 30px 0 0 30px;
+  text-align: center;
+  p {
+    margin: 0;
+    font-size: 16px;
+    color: white;
+  }
+  .playback-name {
+    font-weight: bold;
+    .playback-artist {
+    }
+    .playback-song {
+      color: #666;
+    }
+  }
+  .playback-event {
+    .playback-venue {
+
+    }
+    .playback-time {
+      color: #666;
+    }
+  }
+}
+
 //EVENT MODULES
+
 #main {
   margin-top: 100px;
   width: 830px;
@@ -124,12 +176,14 @@ li.playback-button {
 }
 
 .span12.event {
-  margin-left: 0;
-  margin-bottom: 10px;
+  margin: 10px 0 0 0;
   padding: 2%;
   @include border-radius(2px);
   @include single-box-shadow(rgba(0,0,0,.25), 0, -3px, 0, 0, inset);
-  background-color: white;
+  background-color: #E6E6E6;
+  &.active {
+    background-color: #FFF3C2;
+  }
   .artists {
     padding: 0;
     text-align: left;
@@ -143,15 +197,24 @@ li.playback-button {
       @include border-radius(2px);
       @include single-transition(background-color, .05s, linear, false);
       &:hover {
-        background-color: #E6E6E6;
+        background-color: rgba(0,0,0,.1);
         .small-playback-button {
           margin: 10px 10px 10px 5px;
+        }
+      }
+      &.active {
+        .small-playback-button {
+          background: transparent url(<%= asset_path 'small-pause-button-active.png' %>) no-repeat;
+        }
+        h4.artist-name {
+          color: #007FFF;
         }
       }
       &:last-child {
         margin-bottom: 0;
       }
       .small-playback-button {
+        cursor: pointer;
         height: 20px;
         width: 18px;
         margin: 10px 15px 10px 0;
@@ -159,12 +222,13 @@ li.playback-button {
         float: left;
         background: transparent url(<%= asset_path 'small-play-button.png' %>) no-repeat;
         @include single-transition(margin, .1s, linear, false);
-        &.active{
-          background: transparent url(<%= asset_path 'small-pause-button-active.png' %>) no-repeat;
-        }
       }
       h4 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         margin: 0;
+        text-transform: capitalize;
       }
       h4.artist-name {
 
@@ -179,8 +243,15 @@ li.playback-button {
   .venue {
     padding: 0;
     text-align: right;
-    h4.venue-name {
+    text-transform: capitalize;
+    h4 {
       margin-top: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    p {
+      margin-bottom: 3px;
     }
   }
 }
