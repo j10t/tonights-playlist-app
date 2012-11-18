@@ -1,6 +1,4 @@
-<h1>Editing track</h1>
-
 <%= render 'form' %>
 
-<%= link_to 'Show', @track %> |
-<%= link_to 'Back', tracks_path %>
+<% link_to 'Show', event_track_path(@event, @track) %>
+<% link_to 'Back', event_tracks_path(@event) %>
