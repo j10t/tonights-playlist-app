@@ -7,7 +7,6 @@ gem 'rails', '3.2.8'
 
 gem 'httparty'
 gem 'multi_json'
-gem 'ruby-debug19'
 
 # Gems used only for assets and not required
 # in production environments by default.
