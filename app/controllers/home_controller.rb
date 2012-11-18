@@ -1,40 +1,13 @@
 class HomeController < ApplicationController
 
   def index
-  	track1 = {'artist' => "Animal Collective", 
-  			  'song_title' => "My Girls", 
-  			  'track_source' => "youtube", 
-  			  'track_source_id' => "zol2MJf6XNE"}
-
-  	track2 = {'artist' => "Yeasayer",
-  			  'song_title' => "Ampling Alp",
-  			  'track_source' => "youtube",
-  			  'track_source_id' => "ZKXujEphWS8"}
-
-  	track3 = {'artist' => "Grimes",
-  			  'song_title' => "Beast Infection",
-  			  'track_source' => "youtube",
-  			  'track_source_id' => "EeT0XRSM6VQ"}
-
-  	event1 = {'venue' => "Neumos",
-  			  'tracks' => [track1, track2, track3]}
-  	
-  	event2 = {'venue' => "Chop Suey",
-  			  'tracks' => [track1, track3]}
-
-  	@playlist = [event1, event2]
-
+    @playlist = [];      # The playlist for the UI
 
     # Get today's canonical date
     canonical_date = "#{Time.now.month}/#{Time.now.day}/#{Time.now.year}"
 
-    # stub yesterday until we have today
-    canonical_date = "#{Time.now.month}/17/#{Time.now.year}"
-
     # Get all of today's events
     todays_events = Event.where(:date => canonical_date)
-
-    @playlist = [];
 
     # For each of today's events...
     todays_events.each do |e|
