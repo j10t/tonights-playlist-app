@@ -6,6 +6,7 @@
       <div class="row-fluid">
         <div class="span6 artists">
           <ul class="artist-list">
+          <%= puts event_data %>
           <% event_data[1].each do |t| %>
             <%= render 'track', :track_data => t %>
           <% end %>
