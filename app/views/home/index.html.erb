@@ -1,2 +1,27 @@
-<h1 class="well">Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<span style="display:none">
+  <%= @playlist.to_json %>
+</span>
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+  	<div class="container">
+      <ul class="pull-left playback-controls">
+        <li><a class="playback-button playback-play" href="#">Play</a></li>
+        <li><a class="playback-button playback-skip" href="#">Skip</a></li>
+      </ul>
+      <ul class="playback-info">
+        <li class="playback-artist">Artist Name</li>
+        <li class="playback-title">Song Title</li>
+        <li class="playback-venue">Venue Name</li>
+      </ul>
+      <a class="brand" href="#">Tonight's Playlist</a>
+	</div>
+  </div>
+</div>
+
+<div id="main" class="container">
+
+  <% @playlist.each do |e| %>
+    <%= render 'event', :event_data => e %>
+  <% end %>
+
+</div>
