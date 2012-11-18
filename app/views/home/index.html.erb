@@ -5,18 +5,20 @@
   <div class="navbar-inner">
   	<div class="container">
       <ul class="pull-left playback-controls">
-        <li><a class="playback-button playback-play" href="#">Play</a></li>
-        <li><a class="playback-button playback-skip" href="#">Skip</a></li>
+        <li><a id="playPauseToggleButton" class="playback-button playback-play" href="#">Play</a></li>
+        <li><a id="nextTrackButton" class="playback-button playback-skip" href="#">Skip</a></li>
       </ul>
       <ul class="playback-info">
-        <li class="playback-artist">Artist Name</li>
-        <li class="playback-title">Song Title</li>
-        <li class="playback-venue">Venue Name</li>
+        <li id="artistName" class="playback-artist">Artist Name</li>
+        <li id="songTitle" class="playback-title">Song Title</li>
+        <li id="venueName" class="playback-venue">Venue Name</li>
       </ul>
       <a class="brand" href="#">Tonight's Playlist</a>
 	</div>
   </div>
 </div>
+
+<% @trackIndex = 0; %>
 
 <div id="main" class="container">
   <% @playlist.each do |event| %>
@@ -27,8 +29,13 @@
       <div class="span6 artists">
       <ul class="artist-list">
         <% event['tracks'].each do |track| %>
+          <span style="position:absolute;left:-500px;">
+          <!-- span -->
+            <div id="player<%= @trackIndex %>"></div>
+          </span>
+          <a id="track<%= @trackIndex.to_s %>PlayPauseToggleButton" data-type="toggle-play" class="small-playback-button small-playback-play"><i id="track<%= @trackIndex.to_s %>PlayPauseToggleButtonLabel" class="icon-play">Play</i></a>
+          <% @trackIndex = @trackIndex + 1; %>
           <li class="artist">
-            <a data-type="toggle-play" class="small-playback-button small-playback-play"><i class="icon-play"></i></a>
             <h4 class="artist-name"><%= track['artist'] %></h4>
             <h4 class="artist-song"><%= track['song_title'] %></h4>
           </li>
@@ -47,3 +54,25 @@
   <% end %>
 
 </div>
+
+<!-- Initialize the Playback controls -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+<script type="text/javascript" src="/assets/youtubeTrack.js"></script>
+<script language="text/javascript" src="/assets/tracklist.js"></script>
+
+<script>
+  var events = <%= @playlist.to_json.html_safe %>;
+
+  // Create a slightly different data structure with just a list of tracks (it's easier for playback purposes)
+  var tracks = [];
+  for (var eventIndex = 0; eventIndex < events.length; eventIndex++) {
+    var e = events[eventIndex];
+    for (var trackIndex = 0; trackIndex < e.tracks.length; trackIndex++) {
+      var t = e.tracks[trackIndex];
+      t.venue = e.venue;
+      tracks.push(t);
+    }
+  }
+
+  var tracklistController = createTracklistController(tracks);
+</script>
