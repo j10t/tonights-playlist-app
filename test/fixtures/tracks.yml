@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  source: MyString
+  sourceid: 1
+  name: MyString
+  album: MyString
+
+two:
+  source: MyString
+  sourceid: 1
+  name: MyString
+  album: MyString

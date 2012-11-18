@@ -1,0 +1,22 @@
+<% # event_data = {venue: "Neumos", tracks: {track1: track1, track2: track2, track3: track3}} %>
+  <div class="row-fluid">
+    <div class="span12 time-divider">
+    </div>
+    <div class="span12 event">
+      <div class="row-fluid">
+        <div class="span6 artists">
+          <ul class="artist-list">
+          <% event_data[1].each do |t| %>
+            <%= render 'track', :track_data => t %>
+          <% end %>
+          </ul>
+        </div>
+        <div class="span6 venue">
+          <h4 class=""><%= event_data[0] %></h4>
+          <p>9:00pm Tonight</p>
+          <p>Buy Tickets</p>
+          <p>Directions</p>
+        </div>
+      </div>
+    </div>
+  </div>

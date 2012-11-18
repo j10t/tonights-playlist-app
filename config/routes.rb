@@ -1,7 +1,13 @@
 TonightsPlaylistApp::Application.routes.draw do
+  get "static_pages/home"
   get "home/index"
 
-  match '/' => "home#index"
+  root :to => 'home#index'
+
+  resources :artists
+  resources :events
+  resources :venues
+  resources :tracks
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -9,7 +9,7 @@ html {
 }
 
 body {
-  background-color: #333;
+  background: #333 url(<%= asset_path 'crosshatch-bg.png' %>) repeat;
   padding: 0;
 }
 
@@ -36,6 +36,12 @@ li.playback-button {
 .navbar {
 
 }
+
+[class^="icon-"],
+[class*=" icon-"] {
+  background-image: url(<%= asset_path 'glyphicons-halflings.png' %>);
+}
+
 //NAVBAR
 
 .navbar {
@@ -48,25 +54,30 @@ li.playback-button {
     margin: 0;
     background-image: none;
     background-color: #000;
-    @include single-box-shadow(rgba(0,0,0,.25), 0, 20px, 20px, 0, false);
+    @include single-box-shadow(rgba(0,0,0,.15), 0, 10px, 20px, 0, false);
     .navbar-progress {
+      z-index: 9999;
       width: 25%;
       position: absolute;
       height: 100%;
       padding: 0;
       margin: 0;
       float: left;
-      background-color: rgba(255,255,255, .25);
+      background-color: white;
+      border-right: 3px dotted white;
+      @include opacity(.25);
       @include single-transition(width, .25s, linear, false);
     }
     .container {
+      position: relative;
+      z-index: 999999;
       height: 100%;
       width: 830px;
       .brand {
         display: inline-block;
         width: 233px;
         height: 80px;
-        margin: 0;
+        margin: 10px 0;
         padding: 0;
         float: right;
         background: transparent url(<%= asset_path 'logo-large.png' %>) no-repeat;
@@ -87,10 +98,13 @@ li.playback-button {
     float: left;
     display: inline-block;
     position: relative;
-    @include opacity(.8);
     @include single-transition(opacity, .1s, linear, false);
+    @include opacity(.8);
     &:hover {
       @include opacity(1);
+    }
+    &:active {
+      margin-bottom: -2px;
     }
     &.playback-play {
       top: 50px;
@@ -119,11 +133,27 @@ li.playback-button {
 .playback-info {
   float:left;
   display: inline-block;
-  margin-left: 20px;
+  margin: 30px 0 0 30px;
   p {
     margin: 0;
     font-size: 16px;
     color: white;
+  }
+  .playback-name {
+    font-weight: bold;
+    .playback-artist {
+    }
+    .playback-song {
+      color: #666;
+    }
+  }
+  .playback-event {
+    .playback-venue {
+
+    }
+    .playback-time {
+      color: #666;
+    }
   }
 }
 
@@ -149,7 +179,10 @@ li.playback-button {
   padding: 2%;
   @include border-radius(2px);
   @include single-box-shadow(rgba(0,0,0,.25), 0, -3px, 0, 0, inset);
-  background-color: white;
+  background-color: #E6E6E6;
+  &.active {
+    background-color: #e1e1e1;
+  }
   .artists {
     padding: 0;
     text-align: left;
@@ -163,9 +196,17 @@ li.playback-button {
       @include border-radius(2px);
       @include single-transition(background-color, .05s, linear, false);
       &:hover {
-        background-color: #E6E6E6;
+        background-color: rgba(0,0,0,.1);
         .small-playback-button {
           margin: 10px 10px 10px 5px;
+        }
+      }
+      &.active {
+        .small-playback-button {
+          background: transparent url(<%= asset_path 'small-pause-button-active.png' %>) no-repeat;
+        }
+        h4.artist-name {
+          color: #007FFF;
         }
       }
       &:last-child {
@@ -180,11 +221,15 @@ li.playback-button {
         background: transparent url(<%= asset_path 'small-play-button.png' %>) no-repeat;
         @include single-transition(margin, .1s, linear, false);
         &.active{
-          background: transparent url(<%= asset_path 'small-pause-button-active.png' %>) no-repeat;
+
         }
       }
       h4 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         margin: 0;
+        text-transform: capitalize;
       }
       h4.artist-name {
 
@@ -199,7 +244,8 @@ li.playback-button {
   .venue {
     padding: 0;
     text-align: right;
-    h4.venue-name {
+    text-transform: capitalize;
+    h4 {
       margin-top: 0;
     }
   }
