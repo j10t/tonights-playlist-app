@@ -9,7 +9,7 @@ html {
 }
 
 body {
-  background-color: #222;
+  background-color: #333;
   padding: 0;
 }
 
@@ -63,9 +63,13 @@ li.playback-button {
       height: 100%;
       width: 830px;
       .brand {
+        display: inline-block;
+        width: 233px;
+        height: 80px;
         margin: 0;
         padding: 0;
         float: right;
+        background: transparent url(<%= asset_path 'logo-large.png' %>) no-repeat;
       }
       ul {
         li {
@@ -75,6 +79,8 @@ li.playback-button {
     }
   }
 }
+
+//PLAYBACK CONTROLS
 
 .playback-controls {
   li > a.playback-button {
@@ -108,7 +114,21 @@ li.playback-button {
   }
 }
 
+//PLAYBACK INFO
+
+.playback-info {
+  float:left;
+  display: inline-block;
+  margin-left: 20px;
+  p {
+    margin: 0;
+    font-size: 16px;
+    color: white;
+  }
+}
+
 //EVENT MODULES
+
 #main {
   margin-top: 100px;
   width: 830px;
