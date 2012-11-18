@@ -57,7 +57,7 @@ namespace :data do
         t.artist = artists[i].text
       end
       if track.save
-        puts "#{e.venue} track saved"
+        puts "#{event.venue} track saved"
       else
         puts "error saving track"
       end
