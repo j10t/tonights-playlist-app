@@ -11,6 +11,7 @@ html {
 body {
   background: #333 url(<%= asset_path 'crosshatch-bg.png' %>) repeat;
   padding: 0;
+  font-family: Arial, sans-serif;
 }
 
 //GIVING EVERYTHING BORDER-BOX SIZING
@@ -40,7 +41,6 @@ li.playback-button {
 [class^="icon-"],
 [class*=" icon-"] {
   vertical-align: text-top;
-  background-image: url(<%= asset_path 'glyphicons-halflings.png' %>);
 }
 
 //NAVBAR
@@ -80,6 +80,7 @@ li.playback-button {
         margin: 10px 0;
         padding: 0;
         float: right;
+        cursor: default;
         background: transparent url(<%= asset_path 'logo-large.png' %>) no-repeat;
       }
       ul {
@@ -141,6 +142,13 @@ li.playback-button {
     font-size: 16px;
     color: white;
   }
+  span {
+    display: inline-block;
+    max-width: 50%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
   .playback-name {
     font-weight: bold;
     .playback-artist {
@@ -169,9 +177,25 @@ li.playback-button {
 .time-divider {
   color: white;
   text-align: left;
-  padding-left: 2%;
+  padding: 0;
+  margin: 10px 0 0 0;
+  width: 100%;
   h4 {
+    margin: 0;
+    color: gold;
+    font-size: 100%;
     font-weight: normal;
+  }
+  .social-buttons {
+    cursor: pointer;
+    display: inline;
+    width: 83px;
+    height: 20px;
+    background: transparent url(<%= asset_path 'fake-social-buttons.png' %>) no-repeat;
+    @include opacity(.5);
+    &:hover {
+      @include opacity(1);
+    }
   }
 }
 
@@ -232,6 +256,7 @@ li.playback-button {
       h4 {
         white-space: nowrap;
         text-overflow: ellipsis;
+        overflow: hidden;
         margin: 0;
         text-transform: capitalize;
         @include single-transition(color, .5s, linear, false);
@@ -254,6 +279,17 @@ li.playback-button {
       margin-top: 0;
       white-space: nowrap;
       text-overflow: ellipsis;
+      overflow: hidden;
+      span {
+        text-transform: none;
+        color: #999;
+        font-size: 90%;
+        font-weight: normal;
+      }
+    }
+    a {
+      color: #007FFF;
+      cursor: pointer;
     }
     p {
       margin-bottom: 3px;
@@ -266,4 +302,18 @@ li.playback-button {
       margin-left: 5px;
     }
   }
+}
+
+#main > div:nth-child(odd) {
+  .event {
+    background: #CCC url(<%= asset_path 'paper-texture.png' %>) repeat;
+  }
+}
+
+.footer {
+  padding: 0;
+  margin: 10px 0 ;
+  width: 100%;
+  text-align: center;
+  color: #999;
 }

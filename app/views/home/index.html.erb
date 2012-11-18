@@ -27,9 +27,12 @@
 <% @trackIndex = 0; %>
 
 <div id="main" class="container">
+  <div class="span12 time-divider">
+    <h4 class="pull-left"><i class="icon-arrow-down icon-white"></i> Artists performing tonight in Seattle</h4>
+    <a class="social-buttons pull-right"></a>
+  </div>
   <% @playlist.each do |event| %>
     <div class="row-fluid">
-      <div class="span12 time-divider"></div>
       <div class="span12 event">
       <div class="row-fluid">
       <div class="span8 artists">
@@ -51,13 +54,14 @@
       <div class="span4 venue">
       <h4 class=""><%= event['venue'] %></h4>
       <p>9:00pm Tonight <i class="icon-time"></i></p>
-      <p>Buy Tickets <i class="icon-shopping-cart"></i></p>
-      <p>Directions <i class="icon-map-marker"></i></p>
+      <p><a>Buy Tickets</a> <i class="icon-shopping-cart"></i></p>
+      <p><a>Directions</a> <i class="icon-map-marker"></i></p>
       </div>
       </div>
     </div>
   </div>
   <% end %>
+  <div class="span12 footer">No more music tonight!<br />&copy; 2012 Tonight's Playlist Project<br />All music is the property of the original artists.</div>
 </div>
 
 <!-- Initialize the Playback controls -->
