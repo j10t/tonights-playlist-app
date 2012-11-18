@@ -38,20 +38,20 @@ function createTracklistController(tracks) {
 		play: function() {
 			var track = this.currentTrack();
 			track.play.call(track);
-			document.getElementById("playPauseToggleButton").innerHTML = "Pause";
+			addClass(document.getElementById("playPauseToggleButton"), "active");
 		},
 
 		pause: function() {
 			var track = this.currentTrack();
 			track.pause.call(track);
-			document.getElementById("playPauseToggleButton").innerHTML = "Play";
+			removeClass(document.getElementById("playPauseToggleButton"), "active");
 		},
 
 		stopPlaying: function() {
 			// Note: stop is a reserved word in Javascript
 			var track = this.currentTrack();
 			track.stopPlaying.call(track);
-			document.getElementById("playPauseToggleButton").innerHTML = "Play";
+			removeClass(document.getElementById("playPauseToggleButton"), "active");
 		},
 
 		switchTrack: function(newTrackIndex) {
@@ -78,7 +78,7 @@ function createTracklistController(tracks) {
 		updateTrackProgress: function() {
 			var track = this.currentTrack();
 			var percentComplete = track.getPercentComplete.call(track);
-			// TODO: update the UI to show this much is complete
+			document.getElementById("progressBar").style.width = percentComplete + "%";
 		},
 
 		trackFinished: function() {
@@ -122,9 +122,12 @@ function createTracklistController(tracks) {
 	}
 
 	// Set up a timer to display the status of the current track
-	setInterval(1000, function() {
-		tracklistController.updateTrackProgress.call(tracklistController);
-	});
+	setInterval(
+		function() {
+			tracklistController.updateTrackProgress.call(tracklistController);
+		},
+		200
+	);
 
 	return tracklistController;
 };

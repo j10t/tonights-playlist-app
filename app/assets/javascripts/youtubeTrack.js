@@ -44,26 +44,36 @@ function createYoutubeTrackController(trackIndex, trackData, tracklistController
 		play: function() {
 			this.player.playVideo();
 			this.isPlaying = true;
-			document.getElementById("track" + this.trackIndex + "PlayPauseToggleButtonLabel").innerHTML = "Pause";
+			addClass(document.getElementById("track" + this.trackIndex + "Artist"), "active");
 		},
 
 		pause: function() {
 			this.player.pauseVideo();
 			this.isPlaying = false;
-			document.getElementById("track" + this.trackIndex + "PlayPauseToggleButtonLabel").innerHTML = "Play";
+			removeClass(document.getElementById("track" + this.trackIndex + "Artist"), "active");
 		},
 
 		stopPlaying: function() {
 			// Note: stop is a reserved word
 			this.isPlaying = false;
 			this.player.stopVideo();
-			document.getElementById("track" + this.trackIndex + "PlayPauseToggleButtonLabel").innerHTML = "Play";
+			removeClass(document.getElementById("track" + this.trackIndex + "Artist"), "active");
 		},
 
 		// Get the % completion of the track, from 0 to 1.
 		getPercentComplete: function() {
-			var percentComplete = 100 * this.player.getCurrentTime() / thsi.player.getDuration();
-			return percentComplete;
+			try {
+				var currentTime = this.player.getCurrentTime();
+				var duration = this.player.getDuration();
+				if (!this.player.getCurrentTime() || !this.player.getDuration()) {
+					return 0;
+				}
+				var percentComplete = 100 * currentTime / duration;
+				return percentComplete;
+			} catch (err) {
+				console.log(err);
+				return null;
+			}
 		}
 
 	};
