@@ -7,6 +7,8 @@ TonightsPlaylistApp::Application.routes.draw do
   resources :events
   resources :venues
   resources :tracks
+  get "home/index"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
