@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121118032328) do
+ActiveRecord::Schema.define(:version => 20121118210336) do
 
   create_table "events", :force => true do |t|
     t.string   "venue"
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(:version => 20121118032328) do
 
   create_table "tracks", :force => true do |t|
     t.string   "source"
-    t.integer  "sourceid"
+    t.string   "sourceid"
     t.string   "name"
     t.string   "album"
     t.string   "artist"
