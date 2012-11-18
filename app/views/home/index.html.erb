@@ -3,18 +3,24 @@
 </span>
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="navbar-inner">
-  	<div class="container">
+    <div class="navbar-progress"></div>
+    <div class="container">
       <ul class="pull-left playback-controls">
         <li><a id="playPauseToggleButton" class="playback-button playback-play" href="#">Play</a></li>
         <li><a id="nextTrackButton" class="playback-button playback-skip" href="#">Skip</a></li>
       </ul>
-      <ul class="playback-info">
-        <li id="artistName" class="playback-artist">Artist Name</li>
-        <li id="songTitle" class="playback-title">Song Title</li>
-        <li id="venueName" class="playback-venue">Venue Name</li>
-      </ul>
-      <a class="brand" href="#">Tonight's Playlist</a>
-	</div>
+      <div class="playback-info">
+        <p class="playback-name">
+          <span id="artistName" class="playback-artist">Artist Name</span>
+          <span id="songTitle" class="playback-song">Song Name</span>
+        </p>
+        <p class="playback-event">
+          <span id="venueName" class="playback-venue">Venue Name </span>
+          <span class="playback-time">9:00PM</span>
+        </p>
+      </div>
+      <a class="brand" href="#"></a>
+      </div>
   </div>
 </div>
 
@@ -26,33 +32,32 @@
       <div class="span12 time-divider"></div>
       <div class="span12 event">
       <div class="row-fluid">
-      <div class="span6 artists">
+      <div class="span8 artists">
       <ul class="artist-list">
         <% event['tracks'].each do |track| %>
           <span style="position:absolute;left:-500px;">
           <!-- span -->
             <div id="player<%= @trackIndex %>"></div>
           </span>
-          <a id="track<%= @trackIndex.to_s %>PlayPauseToggleButton" data-type="toggle-play" class="small-playback-button small-playback-play"><i id="track<%= @trackIndex.to_s %>PlayPauseToggleButtonLabel" class="icon-play">Play</i></a>
-          <% @trackIndex = @trackIndex + 1; %>
           <li class="artist">
+            <a id="track<%= trackIndex.to_s%>PlayPauseToggleButton" data-type="toggle-play" class="small-playback-button small-playback-play"><i id="track<%= @trackIndex.to_s %>PlayPauseToggleButtonLabel" class="icon-play">Play</i></a>
+            <% @trackIndex = @trackIndex + 1; %>
             <h4 class="artist-name"><%= track['artist'] %></h4>
             <h4 class="artist-song"><%= track['song_title'] %></h4>
           </li>
         <% end %>
       </ul>
       </div>
-      <div class="span6 venue">
-      <h5 class=""><%= event['venue'] %></h5>
-      <p>9:00pm Tonight</p>
-      <p>Buy Tickets</p>
-      <p>Directions</p>
+      <div class="span4 venue">
+      <h4 class=""><%= event['venue'] %></h4>
+      <p>9:00pm Tonight <i class="icon-time"></i></p>
+      <p>Buy Tickets <i class="icon-shopping-cart"></i></p>
+      <p>Directions <i class="icon-map-marker"></i></p>
       </div>
       </div>
     </div>
   </div>
   <% end %>
-
 </div>
 
 <!-- Initialize the Playback controls -->
