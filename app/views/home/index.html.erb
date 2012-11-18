@@ -19,9 +19,31 @@
 </div>
 
 <div id="main" class="container">
-
-  <% @playlist.each do |e| %>
-    <%= render 'event', :event_data => e %>
+  <% @playlist.each do |event| %>
+    <div class="row-fluid">
+      <div class="span12 time-divider"></div>
+      <div class="span12 event">
+      <div class="row-fluid">
+      <div class="span6 artists">
+      <ul class="artist-list">
+        <% event['tracks'].each do |track| %>
+          <li class="artist">
+            <a data-type="toggle-play" class="small-playback-button small-playback-play"><i class="icon-play"></i></a>
+            <h4 class="artist-name"><%= track['artist'] %></h4>
+            <h4 class="artist-song"><%= track['song_title'] %></h4>
+          </li>
+        <% end %>
+      </ul>
+      </div>
+      <div class="span6 venue">
+      <h5 class=""><%= event['venue'] %></h5>
+      <p>9:00pm Tonight</p>
+      <p>Buy Tickets</p>
+      <p>Directions</p>
+      </div>
+      </div>
+    </div>
+  </div>
   <% end %>
 
 </div>
