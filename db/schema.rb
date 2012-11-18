@@ -11,26 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121118001427) do
-
-  create_table "artists", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "eventartists", :force => true do |t|
-    t.integer  "event_id"
-    t.integer  "artist_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
+ActiveRecord::Schema.define(:version => 20121118032328) do
 
   create_table "events", :force => true do |t|
+    t.string   "venue"
+    t.string   "streetaddress"
+    t.string   "city"
+    t.string   "zip"
+    t.string   "fulladdress"
     t.string   "date"
-    t.string   "time"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "tracks", :force => true do |t|
@@ -38,18 +29,10 @@ ActiveRecord::Schema.define(:version => 20121118001427) do
     t.integer  "sourceid"
     t.string   "name"
     t.string   "album"
+    t.string   "artist"
+    t.integer  "event_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-  end
-
-  create_table "venues", :force => true do |t|
-    t.string   "name"
-    t.string   "streetaddress"
-    t.string   "city"
-    t.string   "zip"
-    t.string   "fulladdress"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
   end
 
 end

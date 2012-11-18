@@ -1,5 +1,37 @@
 <p id="notice"><%= notice %></p>
 
+<%= link_to 'Tracks', event_tracks_path(@event) %>
+
+<p>
+  <b>Venue:</b>
+  <%= @event.venue %>
+</p>
+
+<p>
+  <b>Streetaddress:</b>
+  <%= @event.streetaddress %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%= @event.city %>
+</p>
+
+<p>
+  <b>Zip:</b>
+  <%= @event.zip %>
+</p>
+
+<p>
+  <b>Fulladdress:</b>
+  <%= @event.fulladdress %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%= @event.date %>
+</p>
+
 
 <%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %>

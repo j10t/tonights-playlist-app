@@ -1,5 +1,6 @@
 class Event < ActiveRecord::Base
-  attr_accessible :date, :time
+  has_many :tracks, :dependent => :destroy
+  attr_accessible :city, :date, :fulladdress, :streetaddress, :venue, :zip
 
-  validates :date, presence: true
+  validates :venue, presence: true
 end

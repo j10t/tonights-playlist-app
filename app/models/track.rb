@@ -1,6 +1,8 @@
 class Track < ActiveRecord::Base
-  attr_accessible :album, :name, :source, :sourceid
+  belongs_to :event, :foreign_key => 'event_id'
 
+  attr_accessible :album, :artist, :event_id, :name, :source, :sourceid
+
+  validates :event_id, presence: true
   validates :name, presence: true
-  #TODO add validation for other fields
 end
