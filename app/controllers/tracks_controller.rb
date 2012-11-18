@@ -51,7 +51,7 @@ class TracksController < ApplicationController
 
   def update
     @event = Event.find(params[:event_id])
-    @track = @event.tracks.build(params[:track])
+    @track = @event.tracks.find(params[:id])
 
     respond_to do |format|
       if @track.update_attributes(params[:track])
