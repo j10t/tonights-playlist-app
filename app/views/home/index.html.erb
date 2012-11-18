@@ -19,35 +19,30 @@
 </div>
 
 <div id="main" class="container">
-<<<<<<< HEAD
-  <% @playlist.each do |e| %>
-    <%= render 'event', :event_data => e %>
-=======
   <% @playlist.each do |event| %>
     <div class="row-fluid">
       <div class="span12 time-divider"></div>
       <div class="span12 event">
       <div class="row-fluid">
-      <div class="span6 artists">
+      <div class="span8 artists">
       <ul class="artist-list">
         <% event['tracks'].each do |track| %>
           <li class="artist">
-            <a data-type="toggle-play" class="small-playback-button small-playback-play"><i class="icon-play"></i></a>
+            <a data-type="toggle-play" class="small-playback-button small-playback-play"></a>
             <h4 class="artist-name"><%= track['artist'] %></h4>
             <h4 class="artist-song"><%= track['song_title'] %></h4>
           </li>
         <% end %>
       </ul>
       </div>
-      <div class="span6 venue">
-      <h5 class=""><%= event['venue'] %></h5>
-      <p>9:00pm Tonight</p>
-      <p>Buy Tickets</p>
-      <p>Directions</p>
+      <div class="span4 venue">
+      <h4 class=""><%= event['venue'] %></h4>
+      <p>9:00pm Tonight <i class="icon-time"></i></p>
+      <p>Buy Tickets <i class="icon-shopping-cart"></i></p>
+      <p>Directions <i class="icon-map-marker"></i></p>
       </div>
       </div>
     </div>
   </div>
->>>>>>> 7e614a6ba89f384fa9ae0244a45fa8295fdade5d
   <% end %>
 </div>
