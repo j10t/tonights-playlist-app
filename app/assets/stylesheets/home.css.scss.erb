@@ -192,6 +192,10 @@ li.playback-button {
     width: 83px;
     height: 20px;
     background: transparent url(<%= asset_path 'fake-social-buttons.png' %>) no-repeat;
+    @include opacity(.5);
+    &:hover {
+      @include opacity(1);
+    }
   }
 }
 
