@@ -52,7 +52,7 @@ for i in 1..artists.length-1 #for page 2 0..6 for saturday
     e.date = "11/17/2012"
   end
   track = event.tracks.build do |t|
-    t.name = artists[i].text
+    t.artist = artists[i].text
   end
   if track.save
     puts "track saved"

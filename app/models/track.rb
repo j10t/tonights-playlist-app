@@ -4,5 +4,5 @@ class Track < ActiveRecord::Base
   attr_accessible :album, :artist, :event_id, :name, :source, :sourceid
 
   validates :event_id, presence: true
-  validates :name, presence: true
+  validates :artist , presence: true
 end
