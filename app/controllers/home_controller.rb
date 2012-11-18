@@ -55,8 +55,10 @@ class HomeController < ApplicationController
       end # for each track loop
 
       @playlist << event;
-      puts @playlist.to_json
     end # for each event loop
+
+    # randomize
+    @playlist.shuffle!
 
   end
 
