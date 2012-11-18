@@ -28,30 +28,36 @@ end
 #saturday artists page one
 artists = doc.css('.artists strong')
 locations = doc.css('.location a')
-#for i in 1..artists.length-1 #for page 2 0..6 for saturday
-for i in 1..5 #for page 2 0..6 for saturday
+for i in 1..artists.length-1 #for page 2 0..6 for saturday
+#for i in 1..5 #for page 2 0..6 for saturday
   tmpurl = 'http://www.songkick.com'+locations[i]['href']
   tmpdoc = Nokogiri::HTML(open(tmpurl))
   street_address = store_field(tmpdoc, '.street-address')
   postal_code = store_field(tmpdoc, '.postal-code')
-  locality = store_field(tmpdoc, '.locality')
+  locality = store_field(tmpdoc, '.locality').split(',')[0]
 
   #print output
-  puts "#{artists[i].text},#{locations[i].text},#{street_address},#{postal_code},#{locality}"
+  #puts "#{artists[i].text},#{locations[i].text},#{street_address},#{postal_code},#{locality}"
   #artist = {'name' => artists[i].text}
   #puts artist.to_json
   #venue = {'name' => locations[i].text, 'streetadress' => street_address}
   #puts venue.to_json
 
-  venue = Venue.create! do |v|
-    v.name = locations[i].text
-    v.streetaddress = street_address
-    v.zip = postal_code
-    v.city = 
+  event = Event.create! do |e|
+    e.venue = locations[i].text
+    e.streetaddress = street_address
+    e.zip = postal_code
+    e.city = locality.split(',')[0]
+    e.fulladdress = street_address+' '+locality+' '+postal_code
+    e.date = "11/17/2012"
   end
-
-  artist = Artist.create! do |a|
-    a.name = artists[i].text
+  track = event.tracks.build do |t|
+    t.name = artists[i].text
+  end
+  if track.save
+    puts "track saved"
+  else
+    puts "error saving track"
   end
 end
 

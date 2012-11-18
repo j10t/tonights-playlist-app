@@ -7,6 +7,7 @@ gem 'rails', '3.2.8'
 
 gem 'httparty'
 gem 'multi_json'
+gem 'nokogiri'
 
 # Gems used only for assets and not required
 # in production environments by default.
