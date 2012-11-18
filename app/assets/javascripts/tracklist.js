@@ -93,7 +93,6 @@ function createTracklistController(tracks) {
 	// Each track controller keeps a reference to the tracklistController (this) 
 	// so it can percolate up events (e.g. "my play button was clicked")
 	var trackControllers = [];
-	debugger;
 	for (var i = 0; i < tracks.length; i++) {
 		var trackData = tracks[i];
 
