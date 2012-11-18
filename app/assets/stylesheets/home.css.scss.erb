@@ -39,6 +39,7 @@ li.playback-button {
 
 [class^="icon-"],
 [class*=" icon-"] {
+  vertical-align: text-top;
   background-image: url(<%= asset_path 'glyphicons-halflings.png' %>);
 }
 
@@ -64,8 +65,7 @@ li.playback-button {
       margin: 0;
       float: left;
       background-color: white;
-      border-right: 3px dotted white;
-      @include opacity(.25);
+      @include opacity(.2);
       @include single-transition(width, .25s, linear, false);
     }
     .container {
@@ -131,9 +131,11 @@ li.playback-button {
 //PLAYBACK INFO
 
 .playback-info {
+  width: 450px;
   float:left;
   display: inline-block;
   margin: 30px 0 0 30px;
+  text-align: center;
   p {
     margin: 0;
     font-size: 16px;
@@ -174,14 +176,13 @@ li.playback-button {
 }
 
 .span12.event {
-  margin-left: 0;
-  margin-bottom: 10px;
+  margin: 10px 0 0 0;
   padding: 2%;
   @include border-radius(2px);
   @include single-box-shadow(rgba(0,0,0,.25), 0, -3px, 0, 0, inset);
   background-color: #E6E6E6;
   &.active {
-    background-color: #e1e1e1;
+    background-color: #FFF3C2;
   }
   .artists {
     padding: 0;
@@ -213,6 +214,7 @@ li.playback-button {
         margin-bottom: 0;
       }
       .small-playback-button {
+        cursor: pointer;
         height: 20px;
         width: 18px;
         margin: 10px 15px 10px 0;
@@ -220,9 +222,6 @@ li.playback-button {
         float: left;
         background: transparent url(<%= asset_path 'small-play-button.png' %>) no-repeat;
         @include single-transition(margin, .1s, linear, false);
-        &.active{
-
-        }
       }
       h4 {
         white-space: nowrap;
@@ -247,6 +246,12 @@ li.playback-button {
     text-transform: capitalize;
     h4 {
       margin-top: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    p {
+      margin-bottom: 3px;
     }
   }
 }
