@@ -42,6 +42,9 @@ function createYoutubeTrackController(trackIndex, trackData, tracklistController
 		},
 
 		play: function() {
+			// Debug: skip to the end of the track to check if the transition to the next track works
+			// this.player.seekTo(this.player.getDuration() - 5);
+
 			this.player.playVideo();
 			this.isPlaying = true;
 			addClass(document.getElementById("track" + this.trackIndex + "Artist"), "active");
@@ -103,16 +106,13 @@ function onYouTubePlayerReady(playerId) {
 	var player = document.getElementById(playerId);
 	var trackController = youtubeTrackControllerMap[playerId];
 	trackController.player = player;
-
 	trackController.loadVideo.call(trackController);
+	player.addEventListener("onStateChange", "onYouTubeStateChange");
+};
 
-	player.addEventListener("onStateChange", function(newState) {
-
-		// Call up to the tracklist to report when the track is finished playing
-		if (newState == 0) {
-			var tracklistController = trackController.tracklistController;
-			tracklistController.trackFinished.call(tracklistController);
-		}
-
-	});
+function onYouTubeStateChange(newState) {
+	// Call up to the tracklist to report when the track is finished playing
+	if (newState == 0) {
+		tracklistController.trackFinished.call(tracklistController);
+	}
 };
