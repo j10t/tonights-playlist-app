@@ -3,11 +3,11 @@
 </span>
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="navbar-inner">
-    <div class="navbar-progress"></div>
+    <div id="progressBar" class="navbar-progress"></div>
     <div class="container">
       <ul class="pull-left playback-controls">
-        <li><a id="playPauseToggleButton" class="playback-button playback-play" href="#">Play</a></li>
-        <li><a id="nextTrackButton" class="playback-button playback-skip" href="#">Skip</a></li>
+        <li><a id="playPauseToggleButton" class="playback-button playback-play" href="#"></a></li>
+        <li><a id="nextTrackButton" class="playback-button playback-skip" href="#"></a></li>
       </ul>
       <div class="playback-info">
         <p class="playback-name">
@@ -39,12 +39,12 @@
           <!-- span -->
             <div id="player<%= @trackIndex %>"></div>
           </span>
-          <li class="artist">
-            <a id="track<%= @trackIndex.to_s%>PlayPauseToggleButton" data-type="toggle-play" class="small-playback-button small-playback-play"><i id="track<%= @trackIndex.to_s %>PlayPauseToggleButtonLabel" class="icon-play">Play</i></a>
-            <% @trackIndex = @trackIndex + 1; %>
+          <li class="artist" id="track<%= @trackIndex.to_s %>Artist">
+            <a id="track<%= @trackIndex.to_s %>PlayPauseToggleButton" data-type="toggle-play" class="small-playback-button small-playback-play"></a>
             <h4 class="artist-name"><%= track['artist'] %></h4>
             <h4 class="artist-song"><%= track['song_title'] %></h4>
           </li>
+          <% @trackIndex = @trackIndex + 1; %>
         <% end %>
       </ul>
       </div>
@@ -62,6 +62,7 @@
 
 <!-- Initialize the Playback controls -->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+<script type="text/javascript" src="/assets/util.js"></script>
 <script type="text/javascript" src="/assets/youtubeTrack.js"></script>
 <script language="text/javascript" src="/assets/tracklist.js"></script>
 
