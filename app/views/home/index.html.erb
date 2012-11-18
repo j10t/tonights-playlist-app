@@ -3,20 +3,28 @@
 </span>
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="navbar-inner">
-  	<div class="container">
+    <div id="progressBar" class="navbar-progress"></div>
+    <div class="container">
       <ul class="pull-left playback-controls">
-        <li><a class="playback-button playback-play" href="#">Play</a></li>
-        <li><a class="playback-button playback-skip" href="#">Skip</a></li>
+        <li><a id="playPauseToggleButton" class="playback-button playback-play" href="#"></a></li>
+        <li><a id="nextTrackButton" class="playback-button playback-skip" href="#"></a></li>
       </ul>
-      <ul class="playback-info">
-        <li class="playback-artist">Artist Name</li>
-        <li class="playback-title">Song Title</li>
-        <li class="playback-venue">Venue Name</li>
-      </ul>
-      <a class="brand" href="#">Tonight's Playlist</a>
-	</div>
+      <div class="playback-info">
+        <p class="playback-name">
+          <span id="artistName" class="playback-artist">Artist Name</span>
+          <span id="songTitle" class="playback-song">Song Name</span>
+        </p>
+        <p class="playback-event">
+          <span id="venueName" class="playback-venue">Venue Name </span>
+          <span class="playback-time">9:00PM</span>
+        </p>
+      </div>
+      <a class="brand" href="#"></a>
+      </div>
   </div>
 </div>
+
+<% @trackIndex = 0; %>
 
 <div id="main" class="container">
   <% @playlist.each do |event| %>
@@ -24,26 +32,53 @@
       <div class="span12 time-divider"></div>
       <div class="span12 event">
       <div class="row-fluid">
-      <div class="span6 artists">
+      <div class="span8 artists">
       <ul class="artist-list">
         <% event['tracks'].each do |track| %>
-          <li class="artist">
-            <a data-type="toggle-play" class="small-playback-button small-playback-play"><i class="icon-play"></i></a>
+          <span style="position:absolute;left:-500px;">
+          <!-- span -->
+            <div id="player<%= @trackIndex %>"></div>
+          </span>
+          <li class="artist" id="track<%= @trackIndex.to_s %>Artist">
+            <a id="track<%= @trackIndex.to_s %>PlayPauseToggleButton" data-type="toggle-play" class="small-playback-button small-playback-play"></a>
             <h4 class="artist-name"><%= track['artist'] %></h4>
             <h4 class="artist-song"><%= track['song_title'] %></h4>
           </li>
+          <% @trackIndex = @trackIndex + 1; %>
         <% end %>
       </ul>
       </div>
-      <div class="span6 venue">
-      <h5 class=""><%= event['venue'] %></h5>
-      <p>9:00pm Tonight</p>
-      <p>Buy Tickets</p>
-      <p>Directions</p>
+      <div class="span4 venue">
+      <h4 class=""><%= event['venue'] %></h4>
+      <p>9:00pm Tonight <i class="icon-time"></i></p>
+      <p>Buy Tickets <i class="icon-shopping-cart"></i></p>
+      <p>Directions <i class="icon-map-marker"></i></p>
       </div>
       </div>
     </div>
   </div>
   <% end %>
-
 </div>
+
+<!-- Initialize the Playback controls -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+<script type="text/javascript" src="/assets/util.js"></script>
+<script type="text/javascript" src="/assets/youtubeTrack.js"></script>
+<script language="text/javascript" src="/assets/tracklist.js"></script>
+
+<script>
+  var events = <%= @playlist.to_json.html_safe %>;
+
+  // Create a slightly different data structure with just a list of tracks (it's easier for playback purposes)
+  var tracks = [];
+  for (var eventIndex = 0; eventIndex < events.length; eventIndex++) {
+    var e = events[eventIndex];
+    for (var trackIndex = 0; trackIndex < e.tracks.length; trackIndex++) {
+      var t = e.tracks[trackIndex];
+      t.venue = e.venue;
+      tracks.push(t);
+    }
+  }
+
+  var tracklistController = createTracklistController(tracks);
+</script>
