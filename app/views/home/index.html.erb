@@ -40,7 +40,7 @@
             <div id="player<%= @trackIndex %>"></div>
           </span>
           <li class="artist">
-            <a id="track<%= trackIndex.to_s%>PlayPauseToggleButton" data-type="toggle-play" class="small-playback-button small-playback-play"><i id="track<%= @trackIndex.to_s %>PlayPauseToggleButtonLabel" class="icon-play">Play</i></a>
+            <a id="track<%= @trackIndex.to_s%>PlayPauseToggleButton" data-type="toggle-play" class="small-playback-button small-playback-play"><i id="track<%= @trackIndex.to_s %>PlayPauseToggleButtonLabel" class="icon-play">Play</i></a>
             <% @trackIndex = @trackIndex + 1; %>
             <h4 class="artist-name"><%= track['artist'] %></h4>
             <h4 class="artist-song"><%= track['song_title'] %></h4>
