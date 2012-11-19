@@ -9,7 +9,7 @@ class HomeController < ApplicationController
       canonical_date = "#{params[:month]}/#{params[:day]}/#{params[:year]}"
     else
       # Use today's date
-      canonical_date "#{Time.now.month}/#{Time.now.day}/#{Time.now.year}"
+      canonical_date = "#{Time.now.month}/#{Time.now.day}/#{Time.now.year}"
     end
 
     # Get all of today's events
