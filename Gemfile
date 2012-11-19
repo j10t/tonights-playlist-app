@@ -10,6 +10,7 @@ gem 'multi_json'
 gem 'nokogiri'
 gem 'newrelic_rpm'
 
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
