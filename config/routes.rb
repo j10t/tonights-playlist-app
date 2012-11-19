@@ -8,7 +8,7 @@ TonightsPlaylistApp::Application.routes.draw do
     resources :tracks
   end
   get "home/index"
-
+  match "/:month/:day/:year" => "home#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
