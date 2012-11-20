@@ -28,8 +28,7 @@
 
 <div id="main" class="container">
   <div class="span12 time-divider">
-    <h4 class="pull-left"><i class="icon-arrow-down icon-white"></i> Artists performing tonight in Seattle</h4>
-    <a class="social-buttons pull-right"></a>
+    <h4 class="pull-left"><i class="icon-arrow-up icon-white"></i> Click play to start listening to artists playing in Seattle tonight.</h4>
   </div>
   <% @playlist.each do |event| %>
     <div class="row-fluid">
@@ -61,6 +60,10 @@
     </div>
   </div>
   <% end %>
+  <div class="span12 paginator">
+    <a class="pull-left page-control">Previous Day</a>
+    <a class="pull-right page-control">Next Day</a>
+  </div>
   <div class="span12 footer">No more music tonight!<br />&copy; 2012 Tonight's Playlist Project<br />All music is the property of the original artists.</div>
 </div>
 

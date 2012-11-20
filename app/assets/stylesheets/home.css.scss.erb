@@ -43,6 +43,11 @@ li.playback-button {
   vertical-align: text-top;
 }
 
+.span12 {
+  width: 830px;
+  margin: 0;
+}
+
 //NAVBAR
 
 .navbar {
@@ -307,6 +312,21 @@ li.playback-button {
 #main > div:nth-child(odd) {
   .event {
     background: #CCC url(<%= asset_path 'paper-texture.png' %>) repeat;
+  }
+}
+.paginator {
+  margin: 10px 0;
+  .page-control {
+    background-color: white;
+    padding: 5px 8px;
+    @include border-radius(2px);
+    cursor: pointer;
+    &:hover {
+      color: white;
+      background-color: #007FFF;
+      text-decoration: none;
+      @include single-transition(all, .05s, linear, false);
+    }
   }
 }
 
