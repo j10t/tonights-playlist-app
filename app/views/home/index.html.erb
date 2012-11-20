@@ -60,7 +60,16 @@
     </div>
   </div>
   <% end %>
-  <div class="span12 footer">No more music tonight! &copy; 2012 Tonight's Playlist Project<br />All music is the property of the original artists.</div>
+
+  <div class="navbar navbar-inverse navbar-fixed-bottom">
+    <div class="navbar-inner">
+      <% if (params[:displayed_date] == params[:todays_date]) %>
+        <a class="tomorrow nav-btn btn" href=<%= '/' + params[:tomorrows_date].to_s %>>tomorrow</a>
+      <% else %>
+        <a class="today nav-btn btn" href=<%= '/' + params[:todays_date].to_s %>>today</a>
+      <% end %>
+        <div class="date display"><%= params[:displayed_date] %></a>
+  </div>
 </div>
 
 <!-- Initialize the Playback controls -->
