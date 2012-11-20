@@ -133,6 +133,7 @@ DEPENDENCIES
   nokogiri
   pg
   rails (= 3.2.8)
+  sass
   sass-rails (~> 3.2.3)
   sqlite3
   thin
