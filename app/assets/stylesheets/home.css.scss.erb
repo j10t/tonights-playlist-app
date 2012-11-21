@@ -97,6 +97,49 @@ li.playback-button {
   }
 }
 
+.navbar-fixed-bottom {
+  height: 50px;
+  @include single-box-shadow(rgba(0,0,0,.15), 0, -10px, 20px, 0, false);
+  .date.display {
+    width: 50%;
+    margin: 0 auto;
+    position: relative;
+    top: 17px;
+    font-size: 150%;
+    text-align: center;
+    font-weight: bold;
+    color: gold;
+  }
+  .nav-btn {
+    margin-top: 10px;
+    padding: 3px 20px;
+    font-weight: bold;
+    color: white;
+    background-color: transparent;
+    background-image: none;
+    @include opacity(.75);
+    @include box-shadow(none);
+    @include text-shadow(none);
+    @include single-transition(all, .1s, linear, false);
+  }
+  .today {
+    float: left;
+    &:hover {
+      padding: 3px 25px 3px 15px;
+      @include opacity(1);
+      color: gold;
+    }
+  }
+  .tomorrow {
+    float: right;
+    &:hover {
+      padding: 3px 15px 3px 25px;
+      @include opacity(1);
+      color: gold;
+    }
+  }
+}
+
 //PLAYBACK CONTROLS
 
 .playback-controls {
@@ -111,6 +154,7 @@ li.playback-button {
     }
     &:active {
       margin-bottom: -2px;
+      top: 51px;
     }
     &.playback-play {
       top: 50px;
@@ -312,21 +356,6 @@ li.playback-button {
 #main > div:nth-child(odd) {
   .event {
     background: #CCC url(<%= asset_path 'paper-texture.png' %>) repeat;
-  }
-}
-.paginator {
-  margin: 10px 0;
-  .page-control {
-    background-color: white;
-    padding: 5px 8px;
-    @include border-radius(2px);
-    cursor: pointer;
-    &:hover {
-      color: white;
-      background-color: #007FFF;
-      text-decoration: none;
-      @include single-transition(all, .05s, linear, false);
-    }
   }
 }
 

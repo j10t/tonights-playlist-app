@@ -28,7 +28,14 @@
 
 <div id="main" class="container">
   <div class="span12 time-divider">
-    <h4 class="pull-left"><i class="icon-arrow-up icon-white"></i> Click play to start listening to artists playing in Seattle tonight.</h4>
+    <h4 class="pull-left">
+      <i class="icon-arrow-up icon-white"></i> Click play to start listening to artists performing in Seattle
+      <% if (params[:displayed_date] == params[:todays_date]) %>
+        <span> today.</span>
+      <% else %>
+         <span> tomorrow.</span>
+      <% end %>
+    </h4>
   </div>
   <% @playlist.each do |event| %>
     <div class="row-fluid">
@@ -64,9 +71,9 @@
   <div class="navbar navbar-inverse navbar-fixed-bottom">
     <div class="navbar-inner">
       <% if (params[:displayed_date] == params[:todays_date]) %>
-        <a class="tomorrow nav-btn btn" href=<%= '/' + params[:tomorrows_date].to_s %>>tomorrow</a>
+        <a class="tomorrow nav-btn btn" href=<%= '/' + params[:tomorrows_date].to_s %>>View tomorrow <i class="icon-arrow-right icon-white"></i></a>
       <% else %>
-        <a class="today nav-btn btn" href=<%= '/' + params[:todays_date].to_s %>>today</a>
+        <a class="today nav-btn btn" href=<%= '/' + params[:todays_date].to_s %>><i class="icon-arrow-left icon-white"></i> View today</a>
       <% end %>
         <div class="date display"><%= params[:displayed_date] %></a>
   </div>
