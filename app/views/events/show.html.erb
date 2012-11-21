@@ -33,6 +33,14 @@
   <%= @event.date %>
 </p>
 
+<p>
+  <b>Skbuyurl:</b>
+  <%= @event.skbuyurl%>
+</p>
 
+<p>
+  <b>Additional Details:</b>
+  <%= @event.additionaldetails %>
+</p>
 <%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %>

@@ -1,6 +1,8 @@
 <style>*,h1{color:white;}</style>
 <h1>Listing events</h1>
 
+<%= will_paginate @events %>
+
 <table>
   <tr>
     <th>Id</th>
@@ -10,6 +12,8 @@
     <th>Zip</th>
     <th>Fulladdress</th>
     <th>Date</th>
+    <th>skbuyurl</th>
+    <th>additionaldetails</th>
     <th></th>
     <th></th>
     <th></th>
@@ -24,6 +28,8 @@
     <td><%= event.zip %></td>
     <td><%= event.fulladdress %></td>
     <td><%= event.date %></td>
+    <td><%= event.skbuyurl%></td>
+    <td><%= event.additionaldetails %></td>
     <td><%= link_to 'Show', event %></td>
     <td><%= link_to 'Edit', edit_event_path(event) %></td>
     <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -31,6 +37,5 @@
 <% end %>
 </table>
 
-<br />
-
+<%= will_paginate @events %>
 <%= link_to 'New Event', new_event_path %>

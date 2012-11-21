@@ -9,7 +9,7 @@
     <th>Album</th>
     <th>Source</th>
     <th>Source Id</th>
-    <th>event_id</th>
+    <th>Headliner</th>
   </tr>
 
 <% @tracks.each do |track| %>
@@ -20,6 +20,7 @@
     <td><%= track.album %></td>
     <td><%= track.source %></td>
     <td><%= track.sourceid %></td>
+    <td><%= track.headliner %></td>
     <td><%= link_to 'Show', event_track_path(@event,track) %></td>
     <td><%= link_to 'Edit', edit_event_track_path(@event,track) %></td>
     <td><%= link_to 'Destroy', event_track_path(@event,track), method: :delete, data: { confirm: 'Are you sure?' } %></td>
