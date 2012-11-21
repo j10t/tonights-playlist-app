@@ -50,7 +50,10 @@ namespace :data do
       page_count+=1 if event_count%50==0
 
       #check if buyurl exists in database
-      next if !Event.find_by_skbuyurl(baseurl+buyurl['href']).nil?
+      if !Event.find_by_skbuyurl(baseurl+buyurl['href']).nil?
+        puts "Event already in database"
+        next
+      end
       #skip SAM event
       next if buyurl['href']=="/festivals/524544-elles-at-sam/id/14063229-elles-at-sam-2012"
 
@@ -87,7 +90,7 @@ namespace :data do
         additional_details = additional_details_ary.text.split('Additional details')[1].strip
       end
 
-      event = Event.create do |e|
+      event = Event.new do |e|
         e.venue = venue
         e.streetaddress = street_address
         e.zip = postal_code
