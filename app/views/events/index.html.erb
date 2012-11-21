@@ -3,6 +3,7 @@
 
 <table>
   <tr>
+    <th>Id</th>
     <th>Venue</th>
     <th>Streetaddress</th>
     <th>City</th>
@@ -16,6 +17,7 @@
 
 <% @events.each do |event| %>
   <tr>
+    <td><%= event.id %></td>
     <td><%= event.venue %></td>
     <td><%= event.streetaddress %></td>
     <td><%= event.city %></td>

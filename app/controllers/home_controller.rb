@@ -3,9 +3,9 @@ class HomeController < ApplicationController
   def index
     @playlist = [];       # The playlist for the UI
 
-    @todays_time = Time.now.in_time_zone("Pacific Time (US & Canada)").strftime("%m/%d/%Y")
-    params[:todays_date] = "#{@todays_time.month}/#{@todays_time.day}/#{@todays_time.year}"
-    params[:tomorrows_date] = "#{@todays_time.month}/#{(@todays_time.day + 1).to_s}/#{@todays_time.year}"
+    @todays_time = Time.now.in_time_zone("Pacific Time (US & Canada)")
+    params[:todays_date] = @todays_time.strftime("%m/%d/%Y")
+    params[:tomorrows_date] = (@todays_time+1.days).strftime("%m/%d/%Y")
 
     if params[:month] && params[:day] && params[:year]
       # Use the given date

@@ -8,12 +8,14 @@ namespace :data do
 
     baseurl = "http://www.songkick.com"
 
-    #save buyurls for page 1 thru 20
+    #save buyurls for page 1 thru 5
     buyurls = []
-    for i in 1..20
+    puts "saving buyurls..."
+    for i in 1..5
+      puts "saving page #{i}"
       url = baseurl+"/metro_areas/2846-us-seattle?page=#{i.to_s}"
       url = baseurl+"/metro_areas/2846-us-seattle" if i==1
-      doc = Nokogiri::HTML(open(url))
+      doc = Nokogiri::HTML(open(url, "UserAgent" => "Mozilla/6.0 (Windows NT 6.2; WOW64; rv:16.0.1) Gecko/20121011 Firefox/16.0.1"))
       buyurls += doc.css('.button')
       sleep(2)
     end
@@ -39,15 +41,21 @@ namespace :data do
       end
     end
 
+    event_count = 1
+    page_count  = 1
     #loop through buyurls
     buyurls.each do |buyurl|
+      puts "event:#{event_count} page:#{page_count}"
+      event_count+=1
+      page_count+=1 if event_count%50==0
+
       #check if buyurl exists in database
       next if !Event.find_by_skbuyurl(baseurl+buyurl['href']).nil?
       #skip SAM event
       next if buyurl['href']=="/festivals/524544-elles-at-sam/id/14063229-elles-at-sam-2012"
 
       #browse to buyurl page
-      doc = Nokogiri::HTML(open(baseurl+buyurl['href']))
+      doc = Nokogiri::HTML(open(baseurl+buyurl['href'], "UserAgent" => "Mozilla/6.0 (Windows NT 6.2; WOW64; rv:16.0.1) Gecko/20121011 Firefox/16.0.1"))
 
       #parse date
       if doc.css('.vevent h2').empty?
@@ -71,23 +79,29 @@ namespace :data do
       city = locality.split(',')[0]
 
       #parse additional details
-      additional_details = doc.css('.additional-details')
-      if additional_details.empty?
+      additional_details_ary = doc.css('.additional-details')
+      if additional_details_ary.empty?
         puts "Empty additional details for #{baseurl+buyurl['href']}" 
         additional_details = ''
       else
-        additional_details = additional_details.text.split('Additional details')[1].strip
+        additional_details = additional_details_ary.text.split('Additional details')[1].strip
       end
 
-      event = Event.create! do |e|
+      event = Event.create do |e|
         e.venue = venue
         e.streetaddress = street_address
         e.zip = postal_code
         e.city = city
         e.fulladdress = street_address+' '+locality+' '+postal_code
         e.date = date
-        e.additional_details = additional_details
-        e.buyurl = baseurl+buyurl['href']
+        e.additionaldetails = additional_details
+        e.skbuyurl = baseurl+buyurl['href']
+      end
+
+      if event.save
+        puts "#{event.venue} saved on #{event.date}"
+      else
+        puts "error saving #{event.venue} on #{event.date}"
       end
       
       #create a track object for headliner
@@ -102,7 +116,7 @@ namespace :data do
         create_track(event,lineup_ary[i].text, false)
       end
 
-      sleep(3)
+      sleep(2)
       
     end #end buyurls loop
 
