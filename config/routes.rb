@@ -2,7 +2,7 @@ TonightsPlaylistApp::Application.routes.draw do
   get "static_pages/home"
   get "home/index"
 
-  root :to => 'home#index'
+  root :to => 'home#index#11#20#2012'
 
   resources :events do
     resources :tracks
