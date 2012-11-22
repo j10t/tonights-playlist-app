@@ -3,14 +3,9 @@ class HomeController < ApplicationController
   def index
     @playlist = [];       # The playlist for the UI
 
-#uncomment below after youtube source ids have been added for new data
-=begin
     @todays_time = Time.now.in_time_zone("Pacific Time (US & Canada)")
     params[:todays_date] = @todays_time.strftime("%m/%d/%Y")
     params[:tomorrows_date] = (@todays_time+1.days).strftime("%m/%d/%Y")
-=end
-    params[:todays_date] = "11/17/2012"
-    params[:tomorrows_date] = "11/18/2012"
     
 
     if params[:month] && params[:day] && params[:year]
