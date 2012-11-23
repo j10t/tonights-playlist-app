@@ -113,12 +113,20 @@ function createTracklistController(tracks) {
 	var playPauseToggleButton = document.getElementById("playPauseToggleButton");
 	playPauseToggleButton.onclick = function() {
 		tracklistController.togglePlayPause.call(tracklistController);
+		
+		// Avoid scrolling to the top by returning false
+		// http://stackoverflow.com/questions/2084750/javascript-anchor-avoid-scroll-to-top-on-click
+		return false;
 	}
 
 	// Hook up the next-track button
 	var nextTrackButton = document.getElementById("nextTrackButton");
 	nextTrackButton.onclick = function() {
 		tracklistController.nextTrack.call(tracklistController);
+		
+		// Avoid scrolling to the top by returning false
+		// http://stackoverflow.com/questions/2084750/javascript-anchor-avoid-scroll-to-top-on-click
+		return false;
 	}
 
 	// Set up a timer to display the status of the current track
