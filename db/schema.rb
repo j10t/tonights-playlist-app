@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121118210336) do
+ActiveRecord::Schema.define(:version => 20121121092201) do
 
   create_table "events", :force => true do |t|
     t.string   "venue"
@@ -20,19 +20,22 @@ ActiveRecord::Schema.define(:version => 20121118210336) do
     t.string   "zip"
     t.string   "fulladdress"
     t.string   "date"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.string   "skbuyurl"
+    t.text     "additionaldetails"
   end
 
   create_table "tracks", :force => true do |t|
-    t.string   "source"
-    t.string   "sourceid"
-    t.string   "name"
-    t.string   "album"
-    t.string   "artist"
-    t.integer  "event_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string    "source"
+    t.string    "sourceid"
+    t.string    "name"
+    t.string    "album"
+    t.string    "artist"
+    t.integer   "event_id"
+    t.timestamp "created_at", :null => false
+    t.timestamp "updated_at", :null => false
+    t.boolean   "headliner"
   end
 
 end

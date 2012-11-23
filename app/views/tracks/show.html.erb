@@ -6,6 +6,7 @@
     <th>Source</th>
     <th>Sourceid</th>
     <th>Album</th>
+    <th>Headliner</th>
   </tr>
   <tr>
     <td><%= @track.artist %></td>
@@ -13,6 +14,7 @@
     <td><%= @track.source %></td>
     <td><%= @track.sourceid %></td>
     <td><%= @track.album %></td>
+    <td><%= @track.headliner %></td>
   </tr>
 </table>
 <%= link_to 'Back', event_tracks_path(@event) %>
