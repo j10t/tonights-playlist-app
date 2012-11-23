@@ -42,6 +42,13 @@ function createYoutubeTrackController(trackIndex, trackData, tracklistController
 		},
 
 		play: function() {
+			if (!this.player) {
+				// If the player/video hasn't been loaded yet, load it.
+				// Once the player is loaded, the video will be loaded and this method will be called again.
+				this.loadPlayer();
+				return;
+			}
+
 			// Debug: skip to the end of the track to check if the transition to the next track works
 			// this.player.seekTo(this.player.getDuration() - 5);
 
@@ -65,6 +72,9 @@ function createYoutubeTrackController(trackIndex, trackData, tracklistController
 
 		// Get the % completion of the track, from 0 to 1.
 		getPercentComplete: function() {
+			if (!this.player) {
+				return 0;
+			}
 			try {
 				var currentTime = this.player.getCurrentTime();
 				var duration = this.player.getDuration();
@@ -95,8 +105,6 @@ function createYoutubeTrackController(trackIndex, trackData, tracklistController
 		}
 	}
 
-	trackController.loadPlayer.call(trackController);
-	
 	return trackController;
 };
 
@@ -107,6 +115,7 @@ function onYouTubePlayerReady(playerId) {
 	var trackController = youtubeTrackControllerMap[playerId];
 	trackController.player = player;
 	trackController.loadVideo.call(trackController);
+	trackController.play.call(trackController);
 	player.addEventListener("onStateChange", "onYouTubeStateChange");
 };
 
