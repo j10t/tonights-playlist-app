@@ -24,6 +24,10 @@ class HomeController < ApplicationController
       event = {};
 
       event['venue'] = e.venue;
+      event['fulladdress'] = e.fulladdress;
+      event['opentime'] = '';
+      #convert military time to normal time and save in 'opentime' if we scraped an opening time
+      event['opentime'] = "Doors open: "+Time.strptime(e.additionaldetails.split("Doors open: ")[1], "%H:%M").strftime("%l:%M%P") if e.additionaldetails.include?("Doors open: ");
       event['tracks'] = [];
 
       # build an event object and put it in the playlist
