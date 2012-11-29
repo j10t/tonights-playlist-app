@@ -1,4 +1,6 @@
 TonightsPlaylistApp::Application.routes.draw do
+  resources :venues
+
   get "static_pages/home"
   get "home/index"
 
