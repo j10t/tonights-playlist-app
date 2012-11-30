@@ -2,6 +2,7 @@ class TracksController < ApplicationController
   def index
     @event = Event.find(params[:event_id])
     @tracks = @event.tracks.all
+    @venue = Venue.find(@event.venue_id)
 
     respond_to do |format|
       format.html # index.html.erb
