@@ -11,20 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121129073712) do
+ActiveRecord::Schema.define(:version => 20121130004650) do
 
   create_table "events", :force => true do |t|
-    t.string    "venue"
-    t.string    "streetaddress"
-    t.string    "city"
-    t.string    "zip"
-    t.string    "fulladdress"
-    t.string    "date"
-    t.timestamp "created_at",        :null => false
-    t.timestamp "updated_at",        :null => false
-    t.string    "skbuyurl"
-    t.text      "additionaldetails"
-    t.integer   "venue_id"
+    t.string   "date"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.string   "skbuyurl"
+    t.text     "additionaldetails"
+    t.integer  "venue_id"
   end
 
   create_table "tracks", :force => true do |t|

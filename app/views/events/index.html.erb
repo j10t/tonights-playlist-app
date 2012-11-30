@@ -6,11 +6,7 @@
 <table>
   <tr>
     <th>Id</th>
-    <th>Venue</th>
-    <th>Streetaddress</th>
-    <th>City</th>
-    <th>Zip</th>
-    <th>Fulladdress</th>
+    <th>venue</th>
     <th>Date</th>
     <th>skbuyurl</th>
     <th>additionaldetails</th>
@@ -22,11 +18,7 @@
 <% @events.each do |event| %>
   <tr>
     <td><%= event.id %></td>
-    <td><%= event.venue %></td>
-    <td><%= event.streetaddress %></td>
-    <td><%= event.city %></td>
-    <td><%= event.zip %></td>
-    <td><%= event.fulladdress %></td>
+    <td><%= link_to Venue.find(event.venue_id).name, venue_path(event.venue_id) %></td>
     <td><%= event.date %></td>
     <td><%= link_to "skbuyurl", event.skbuyurl %></td>
     <td><%= event.additionaldetails %></td>
