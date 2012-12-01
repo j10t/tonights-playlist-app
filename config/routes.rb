@@ -1,5 +1,7 @@
 TonightsPlaylistApp::Application.routes.draw do
 
+  resources :artists
+
   get "static_pages/home"
   get "home/index"
 

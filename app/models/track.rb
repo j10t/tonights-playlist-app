@@ -1,8 +1,11 @@
 class Track < ActiveRecord::Base
-  belongs_to :event, :foreign_key => 'event_id'
+  belongs_to :artist, :foreign_key => 'artist_id'
 
-  attr_accessible :artist,:album,:name,:source,:sourceid,:event_id
+  attr_accessible :name,:album,:source,:sourceid,:artist_id
 
-  validates :event_id, presence: true
-  validates :artist , presence: true
+  validates :artist_id, presence: true
+  validates :name, presence: true
+  validates :name, uniqueness: true
+  validates :sourceid, uniqueness: true
+
 end
