@@ -32,13 +32,15 @@ class HomeController < ApplicationController
       event['tracks'] = [];
 
       # build an event object and put it in the playlist
-      e.tracks.each do |t|
-        track = {};
-        track['artist'] = t['artist'];
-        track['song_title'] = t['name'];
-        track['track_source'] = t['source'];
-        track['track_source_id'] = t['sourceid'];
-        event['tracks'] << track unless track['track_source_id'].blank? || track['song_title'].blank? || track['artist'].blank?
+      e.artists.each do |a|
+        a.tracks.each do |t|
+          track = {};
+          track['artist'] = a.name
+          track['song_title'] = t.name
+          track['track_source'] = t.source
+          track['track_source_id'] = t.sourceid
+          event['tracks'] << track unless track['track_source_id'].blank? || track['song_title'].blank? || track['artist'].blank?
+        end
       end # for each track loop
 
      if !event['tracks'].blank? || params[:debug] == "true"
