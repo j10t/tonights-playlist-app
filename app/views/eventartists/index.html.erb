@@ -1,0 +1,18 @@
+<style>*,h1{color:white;}</style>
+<h1>Listing Eventartists</h1>
+
+<table>
+  <tr>
+    <th>Event_id</th>
+    <th>Artist_id</th>
+    <th>Headliner</th>
+  </tr>
+
+<% @eventartists.each do |ea| %>
+  <tr>
+    <td><%= ea.event_id %></td>
+    <td><%= ea.artist_id %></td>
+    <td><%= ea.headliner %></td>
+  </tr>
+<% end %>
+</table>

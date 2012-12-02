@@ -1,16 +1,16 @@
 TonightsPlaylistApp::Application.routes.draw do
 
-  resources :artists
-
   get "static_pages/home"
   get "home/index"
 
   root :to => 'home#index'
 
+  resources :artists
+  resources :tracks
   resources :venues
-  resources :events do
-    resources :tracks
-  end
+  resources :events
+  match "eventartists" => "eventartists#index"
+ 
   match "/:year-:month-:day" => "home#index"
   match "/:month/:day/:year" => "home#index"
 

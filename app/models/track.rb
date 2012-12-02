@@ -5,7 +5,10 @@ class Track < ActiveRecord::Base
 
   validates :artist_id, presence: true
   validates :name, presence: true
-  validates :name, uniqueness: true
-  validates :sourceid, uniqueness: true
+  validates :source, presence: true
+  validates :sourceid, presence: true
+
+  #only one sourceid per artist - could potentially have same vid be for multiple artists tho
+  validates_uniqueness_of :sourceid, :scope => :artist_id
 
 end

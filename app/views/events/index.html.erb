@@ -1,7 +1,6 @@
 <style>*,h1{color:white;}</style>
 <h1>Listing events</h1>
 
-<%= will_paginate @events %>
 
 <table>
   <tr>
@@ -18,7 +17,7 @@
 <% @events.each do |event| %>
   <tr>
     <td><%= event.id %></td>
-    <td><%= link_to Venue.find(event.venue_id).name, venue_path(event.venue_id) %></td>
+    <td><%= link_to event.venue_id, venue_path(event.venue_id) %></td>
     <td><%= event.date %></td>
     <td><%= link_to "skbuyurl", event.skbuyurl %></td>
     <td><%= event.additionaldetails %></td>
@@ -29,5 +28,4 @@
 <% end %>
 </table>
 
-<%= will_paginate @events %>
 <%= link_to 'New Event', new_event_path %>

@@ -1,9 +1,10 @@
+<style>*,h1{color:white;}</style>
 <h1>Listing artists</h1>
 
 <table>
   <tr>
+    <th>Id</th>
     <th>Name</th>
-    <th>Event</th>
     <th></th>
     <th></th>
     <th></th>
@@ -11,8 +12,8 @@
 
 <% @artists.each do |artist| %>
   <tr>
+    <td><%= artist.id %></td>
     <td><%= artist.name %></td>
-    <td><%= artist.event_id %></td>
     <td><%= link_to 'Show', artist %></td>
     <td><%= link_to 'Edit', edit_artist_path(artist) %></td>
     <td><%= link_to 'Destroy', artist, method: :delete, data: { confirm: 'Are you sure?' } %></td>

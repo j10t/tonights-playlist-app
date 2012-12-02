@@ -6,4 +6,5 @@ class Eventartist < ActiveRecord::Base
 
   validates :artist_id, presence: true
   validates :event_id, presence: true
+  validates_uniqueness_of :event_id, :scope => :artist_id
 end

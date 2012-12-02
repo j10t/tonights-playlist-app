@@ -11,11 +11,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121130223830) do
+ActiveRecord::Schema.define(:version => 20121202014232) do
 
   create_table "artists", :force => true do |t|
     t.string   "name"
-    t.integer  "event_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -25,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20121130223830) do
     t.integer  "artist_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.boolean  "headliner"
   end
 
   add_index "eventartists", ["artist_id"], :name => "index_eventartists_on_artist_id"
@@ -41,16 +41,13 @@ ActiveRecord::Schema.define(:version => 20121130223830) do
   end
 
   create_table "tracks", :force => true do |t|
-    t.string    "source"
-    t.string    "sourceid"
-    t.string    "name"
-    t.string    "album"
-    t.string    "artist"
-    t.integer   "event_id"
-    t.timestamp "created_at", :null => false
-    t.timestamp "updated_at", :null => false
-    t.boolean   "headliner"
-    t.integer   "artist_id"
+    t.string   "source"
+    t.string   "sourceid"
+    t.string   "name"
+    t.string   "album"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "artist_id"
   end
 
   create_table "venues", :force => true do |t|
