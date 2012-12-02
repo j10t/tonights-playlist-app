@@ -9,7 +9,7 @@ TonightsPlaylistApp::Application.routes.draw do
   resources :tracks
   resources :venues
   resources :events
-  match "eventartists" => "eventartists#index"
+  resources :eventartists
  
   match "/:year-:month-:day" => "home#index"
   match "/:month/:day/:year" => "home#index"

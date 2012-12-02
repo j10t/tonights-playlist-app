@@ -1,0 +1,20 @@
+<style>*,h1{color:white;}</style>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>event_id:</b>
+  <%= @eventartist.event_id %>
+</p>
+
+<p>
+  <b>artist_id:</b>
+  <%= @eventartist.artist_id %>
+</p>
+
+<p>
+  <b>Headliner:</b>
+  <%= @eventartist.headliner %>
+</p>
+
+<%= link_to 'Edit', edit_eventartist_path(@eventartist) %> |
+<%= link_to 'Back', eventartists_path %>

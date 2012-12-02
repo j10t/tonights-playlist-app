@@ -6,13 +6,21 @@
     <th>Event_id</th>
     <th>Artist_id</th>
     <th>Headliner</th>
+    <th></th>
+    <th></th>
+    <th></th>
   </tr>
 
-<% @eventartists.each do |ea| %>
+<% @eventartists.each do |eventartist| %>
   <tr>
-    <td><%= ea.event_id %></td>
-    <td><%= ea.artist_id %></td>
-    <td><%= ea.headliner %></td>
+    <td><%= eventartist.event_id %></td>
+    <td><%= eventartist.artist_id %></td>
+    <td><%= eventartist.headliner %></td>
+    <td><%= link_to 'Show', eventartist %></td>
+    <td><%= link_to 'Edit', edit_eventartist_path(eventartist) %></td>
+    <td><%= link_to 'Destroy', eventartist, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
+
+<%= link_to 'New Eventartist', new_eventartist_path %>
