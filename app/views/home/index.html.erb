@@ -59,9 +59,9 @@
       </div>
       <div class="span4 venue">
       <h4 class=""><%= event['venue'] %></h4>
-      <p>9:00pm Tonight <i class="icon-time"></i></p>
+      <p><%= event['opentime'] %><i class="icon-time"></i></p>
       <p><a>Buy Tickets</a> <i class="icon-shopping-cart"></i></p>
-      <p><a>Directions</a> <i class="icon-map-marker"></i></p>
+      <p><%= link_to "Directions", "http://maps.google.com/?q=#{URI.escape(event['fulladdress'])}", :target => "_blank" %> <i class="icon-map-marker"></i></p>
       </div>
       </div>
     </div>
