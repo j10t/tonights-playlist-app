@@ -6,10 +6,12 @@ TonightsPlaylistApp::Application.routes.draw do
   root :to => 'home#index'
 
   resources :artists
+  match "artistswotracks" => "artists#wotracks", :as => :wotracks_artists
   resources :tracks
   resources :venues
   resources :events
   resources :eventartists
+
  
   match "/:year-:month-:day" => "home#index"
   match "/:month/:day/:year" => "home#index"

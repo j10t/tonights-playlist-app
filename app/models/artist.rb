@@ -1,5 +1,5 @@
 class Artist < ActiveRecord::Base
-  has_many :eventartists, foreign_key: "artist_id"
+  has_many :eventartists, foreign_key: "artist_id", :dependent => :destroy
   has_many :events, :through => :eventartists
   has_many :tracks, :dependent => :destroy
 

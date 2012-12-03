@@ -80,4 +80,14 @@ class ArtistsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  #list all artists which don't have any tracks
+  def wotracks
+    @artists = Artist.joins("left join tracks on tracks.artist_id = artists.id").where("tracks.artist_id is null").order(:name)
+
+    respond_to do |format|
+      format.html # empty.html.erb
+      format.json { render json: @artists }
+    end
+  end
 end
