@@ -3,21 +3,19 @@ class HomeController < ApplicationController
   def index
     @playlist = [];       # The playlist for the UI
 
-    @todays_time = Time.now.in_time_zone("Pacific Time (US & Canada)")
-    params[:todays_date] = @todays_time.strftime("%m/%d/%Y")
-    params[:tomorrows_date] = (@todays_time+1.days).strftime("%m/%d/%Y")
-    
+    #get todays time in utc
+    @todays_datetime=Time.now.utc+Time.now.utc_offset
 
     if params[:month] && params[:day] && params[:year]
       # Use the given date
-      params[:displayed_date] = "#{params[:month]}/#{params[:day]}/#{params[:year]}"
+      params[:displayed_datetime] = DateTime.new(params[:year].to_i,params[:month].to_i,params[:day].to_i)
     else
       # Use today's date
-      params[:displayed_date] = params[:todays_date]
+      params[:displayed_datetime] = @todays_datetime
     end
 
     # Get all of today's events
-    todays_events = Event.where(:date => params[:displayed_date])
+    todays_events = Event.where(:datetime => params[:displayed_datetime].beginning_of_day..params[:displayed_datetime].end_of_day)
 
     # For each of today's events...
     todays_events.each do |e|

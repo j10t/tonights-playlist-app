@@ -6,7 +6,7 @@
   <tr>
     <th>Id</th>
     <th>venue</th>
-    <th>Date</th>
+    <th>Datetime</th>
     <th>skbuyurl</th>
     <th>additionaldetails</th>
     <th></th>
@@ -18,7 +18,7 @@
   <tr>
     <td><%= event.id %></td>
     <td><%= link_to event.venue_id, venue_path(event.venue_id) %></td>
-    <td><%= event.date %></td>
+    <td><%= event.datetime %></td>
     <td><%= link_to "skbuyurl", event.skbuyurl %></td>
     <td><%= event.additionaldetails %></td>
     <td><%= link_to 'Show', event %></td>

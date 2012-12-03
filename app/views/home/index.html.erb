@@ -70,12 +70,9 @@
 
   <div class="navbar navbar-inverse navbar-fixed-bottom">
     <div class="navbar-inner">
-      <% if (params[:displayed_date] == params[:todays_date]) %>
-        <a class="tomorrow nav-btn btn" href=<%= '/' + params[:tomorrows_date].to_s %>>View tomorrow <i class="icon-arrow-right icon-white"></i></a>
-      <% else %>
-        <a class="today nav-btn btn" href=<%= '/' + params[:todays_date].to_s %>><i class="icon-arrow-left icon-white"></i> View today</a>
-      <% end %>
-        <div class="date display"><%= params[:displayed_date] %></a>
+        <a class="nextday nav-btn btn" href=<%= '/' + (params[:displayed_datetime]+1.days).strftime("%m/%d/%Y") %>>Next<i class="icon-arrow-right icon-white"></i></a>
+        <a class="prevday nav-btn btn" href=<%= '/' + (params[:displayed_datetime]-1.days).strftime("%m/%d/%Y") %>><i class="icon-arrow-left icon-white"></i>Previous</a>
+        <div class="date display"><%= params[:displayed_datetime].strftime("%A %B #{params[:displayed_datetime].day.ordinalize}, %Y") %></a>
   </div>
 </div>
 
