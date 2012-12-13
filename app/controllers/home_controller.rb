@@ -4,7 +4,7 @@ class HomeController < ApplicationController
     @playlist = [];       # The playlist for the UI
 
     #get todays time in utc
-    @todays_datetime=Time.now.utc+Time.now.utc_offset
+    @todays_datetime=Time.now.utc+Time.zone_offset('PST')
 
     if params[:month] && params[:day] && params[:year]
       # Use the given date
