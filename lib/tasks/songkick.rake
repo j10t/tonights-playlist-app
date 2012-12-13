@@ -1,127 +1,183 @@
+require 'timeout'
+
 namespace :data do
   desc "Add Seattle songkick events"
-  task :songkicksea => :environment do
+  task :songkicksea, [:start_page, :stop_page] => :environment do |t, args|
+    Timeout.timeout(900) do #timeout after 15 minutes to avoid high heroku bill
+      args.with_defaults(:start_page => 1, :stop_page => 5)
 
-    require 'open-uri'
-    require 'nokogiri'
-    require 'date'
+      require 'open-uri'
+      require 'nokogiri'
+      require 'date'
 
-    baseurl = "http://www.songkick.com"
+      baseurl = "http://www.songkick.com"
 
-    #save buyurls for page 1 thru 5
-    buyurls = []
-    puts "saving buyurls..."
-    for i in 1..5
-      puts "saving page #{i}"
-      url = baseurl+"/metro_areas/2846-us-seattle?page=#{i.to_s}"
-      url = baseurl+"/metro_areas/2846-us-seattle" if i==1
-      doc = Nokogiri::HTML(open(url, "UserAgent" => "Mozilla/6.0 (Windows NT 6.2; WOW64; rv:16.0.1) Gecko/20121011 Firefox/16.0.1"))
-      buyurls += doc.css('.button')
-      sleep(2)
+      buyurls = []
+      puts "saving buyurls..."
+      #save buyurls for pages args.start_page thru args.stop_page
+      for i in args.start_page..args.stop_page
+        puts "saving page #{i}"
+        url = baseurl+"/metro_areas/2846-us-seattle?page=#{i.to_s}"
+        url = baseurl+"/metro_areas/2846-us-seattle" if i==1
+        doc = Nokogiri::HTML(open(url, "UserAgent" => "Mozilla/6.0 (Windows NT 6.2; WOW64; rv:16.0.1) Gecko/20121011 Firefox/16.0.1"))
+        buyurls += doc.css('.button')
+        sleep(2)
+      end
+
+      def store_field(doc, selector)
+        if !doc.css(selector).empty?
+          text = doc.css(selector).text
+        else
+          text = ''
+        end
+        return text
+      end
+
+
+      event_count = 1
+      page_count  = 1
+      #loop through buyurls
+      buyurls.each do |buyurl|
+        puts "event:#{event_count} page:#{page_count}"
+        event_count+=1
+        page_count+=1 if event_count%50==1
+
+        #check if buyurl exists in database
+        if !Event.find_by_skbuyurl(baseurl+buyurl['href']).nil?
+          puts "Event already in database"
+          next
+        end
+
+        #browse to buyurl page
+        doc = Nokogiri::HTML(open(baseurl+buyurl['href'], "UserAgent" => "Mozilla/6.0 (Windows NT 6.2; WOW64; rv:16.0.1) Gecko/20121011 Firefox/16.0.1"))
+
+        #parse date
+        if doc.css('.vevent h2').empty?
+          puts "Error parsing date for #{baseurl+buyurl['href']}" 
+          next
+        else
+          date_ary = doc.css('.vevent h2').text.strip.split(' ')
+          month    = sprintf('%02d',Date::MONTHNAMES.index(date_ary[2])).to_i
+          day      = date_ary[1].to_i
+          year     = date_ary[3].to_i
+          datetime = DateTime.new(year,month,day)
+        end
+
+        #parse venue
+        venue_name = store_field(doc,'.org a')
+
+        #parse address
+        street_address = store_field(doc, '.street-address')
+        postal_code = store_field(doc, '.postal-code')
+        locality = store_field(doc, '.locality')
+        city = locality.split(',')[0]
+
+        #parse additional details
+        additional_details_ary = doc.css('.additional-details')
+        if additional_details_ary.empty?
+          additional_details = ''
+        else
+          additional_details = additional_details_ary.text.split('Additional details')[1].strip
+        end
+
+        ########### Start storing in database ###########
+        
+        #check for venue
+        v=Venue.find_by_name(venue_name)
+        #create venue if one doesn't exist
+        if v.nil?
+          v=Venue.new do |ven|
+            ven.name          = venue_name
+            ven.streetaddress = street_address
+            ven.city          = city
+            ven.zip           = postal_code
+            ven.zip           = nil if postal_code.empty?
+            ven.fulladdress   = street_address+' '+locality+' '+postal_code
+            if ven.save
+              puts "New venue: #{ven.name} saved"
+            else
+              puts "Venue save error: #{ven.errors.messages.inspect}"
+            end
+          end
+        end
+
+        #skip SAM event
+        if v.name == "Seattle Art Museum"
+          puts "skipping SAM event"
+          next
+        end
+
+        e=nil
+        #check for event
+        #convert datetime to timewithzone class for where
+        e=v.events.where(:datetime => Time.zone.parse(datetime.to_s)).first if !v.events.empty?
+        if e.nil?
+          #create an event
+          e=v.events.build do |event|
+            event.datetime          = datetime
+            event.additionaldetails = additional_details
+            event.skbuyurl          = baseurl+buyurl['href']
+            if event.save
+              puts "New event saved on #{event.datetime}"
+            else
+              puts "Event save error: #{event.errors.messages.inspect}"
+            end
+          end
+        end
+
+
+        def find_or_create_artist(artist)
+          #check for artist
+          a=Artist.find_by_name(artist)
+          #create artist if one doesn't exist
+          if a.nil?
+            a=Artist.new do |art|
+              art.name = artist
+              if art.save
+                puts "New artist: #{art.name} saved"
+              else
+                puts "Artist save error: #{art.errors.messages.inspect}"
+              end
+            end
+          end
+          return a
+        end
+
+
+        def create_eventartist(event,artist,boolheadliner)
+          #return if not unique
+          return if !Eventartist.where(:event_id => event.id, :artist_id => artist.id).empty?
+          #otherwise create an eventartists relationship
+          event.eventartists.build do |ea|
+            ea.artist_id = artist.id
+            ea.event_id  = event.id
+            ea.headliner = boolheadliner
+            if ea.save
+              puts "New eventartist saved"
+            else
+              puts "Eventartist save error: #{ea.errors.messages.inspect}"
+            end
+          end
+        end
+
+        #find or create artist headliner
+        headliner_name = store_field(doc, '.headliner a')
+        a=find_or_create_artist(headliner_name)
+        ea = create_eventartist(e,a,true)
+
+        #find or create artist for other bands in lineup if they exist
+        lineup_ary = doc.css('.line-up a')
+        next if lineup_ary.empty?
+        #skip headliner so start at 1 not 0
+        for i in 1..lineup_ary.length-1
+          a=find_or_create_artist(lineup_ary[i].text)
+          ea = create_eventartist(e,a,false)
+        end
+
+        sleep(1)
+        
+      end #end buyurls loop
+
     end
-
-    def store_field(doc, selector)
-      if !doc.css(selector).empty?
-        text = doc.css(selector).text
-      else
-        text = ''
-      end
-      return text
-    end
-
-    def create_track(event,artist, headliner)
-      track = event.tracks.build do |t|
-        t.artist = artist
-        t.headliner = headliner
-      end
-      if track.save
-        puts "#{event.venue} track saved for artist #{artist}"
-      else
-        puts "error saving track for #{event.venue} on #{event.date}"
-      end
-    end
-
-    event_count = 1
-    page_count  = 1
-    #loop through buyurls
-    buyurls.each do |buyurl|
-      puts "event:#{event_count} page:#{page_count}"
-      event_count+=1
-      page_count+=1 if event_count%50==0
-
-      #check if buyurl exists in database
-      if !Event.find_by_skbuyurl(baseurl+buyurl['href']).nil?
-        puts "Event already in database"
-        next
-      end
-      #skip SAM event
-      next if buyurl['href']=="/festivals/524544-elles-at-sam/id/14063229-elles-at-sam-2012"
-
-      #browse to buyurl page
-      doc = Nokogiri::HTML(open(baseurl+buyurl['href'], "UserAgent" => "Mozilla/6.0 (Windows NT 6.2; WOW64; rv:16.0.1) Gecko/20121011 Firefox/16.0.1"))
-
-      #parse date
-      if doc.css('.vevent h2').empty?
-        puts "Error parsing date for #{baseurl+buyurl['href']}" 
-        next
-      else
-        date_ary = doc.css('.vevent h2').text.strip.split(' ')
-        month = sprintf('%02d',Date::MONTHNAMES.index(date_ary[2]))
-        day = date_ary[1]
-        year = date_ary[3]
-        date = "#{month}/#{day}/#{year}"
-      end
-
-      #parse venue
-      venue = store_field(doc,'.org a')
-
-      #parse address
-      street_address = store_field(doc, '.street-address')
-      postal_code = store_field(doc, '.postal-code')
-      locality = store_field(doc, '.locality')
-      city = locality.split(',')[0]
-
-      #parse additional details
-      additional_details_ary = doc.css('.additional-details')
-      if additional_details_ary.empty?
-        puts "Empty additional details for #{baseurl+buyurl['href']}" 
-        additional_details = ''
-      else
-        additional_details = additional_details_ary.text.split('Additional details')[1].strip
-      end
-
-      event = Event.new do |e|
-        e.venue = venue
-        e.streetaddress = street_address
-        e.zip = postal_code
-        e.city = city
-        e.fulladdress = street_address+' '+locality+' '+postal_code
-        e.date = date
-        e.additionaldetails = additional_details
-        e.skbuyurl = baseurl+buyurl['href']
-      end
-
-      if event.save
-        puts "#{event.venue} saved on #{event.date}"
-      else
-        puts "error saving #{event.venue} on #{event.date}"
-      end
-      
-      #create a track object for headliner
-      headliner = store_field(doc, '.headliner a')
-      create_track(event, headliner, true)
-
-      #create a track object for other bands in lineup if they exist
-      lineup_ary = doc.css('.line-up a')
-      next if lineup_ary.empty?
-      #skip headliner so start at 1 not 0
-      for i in 1..lineup_ary.length-1
-        create_track(event,lineup_ary[i].text, false)
-      end
-
-      sleep(2)
-      
-    end #end buyurls loop
-
   end
 end
