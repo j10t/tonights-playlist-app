@@ -1,0 +1,2 @@
+module EventartistsHelper
+end

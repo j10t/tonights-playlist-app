@@ -1,33 +1,31 @@
 <style>*,h1{color:white;}</style>
-<h1><%= @event.venue %> Tracks</h1>
+<h1>Listing  tracks</h1>
 
 <table>
   <tr>
     <th>id</th>
-    <th>Artist</th>
+    <th>artist_id</th>
     <th>Name</th>
     <th>Album</th>
     <th>Source</th>
     <th>Source Id</th>
-    <th>Headliner</th>
   </tr>
 
 <% @tracks.each do |track| %>
   <tr>
     <td><%= track.id %></td>
-    <td><%= track.artist %></td>
+    <td><%= link_to track.artist_id, artist_path(track.artist_id) %></td>
     <td><%= track.name %></td>
     <td><%= track.album %></td>
     <td><%= track.source %></td>
     <td><%= track.sourceid %></td>
-    <td><%= track.headliner %></td>
-    <td><%= link_to 'Show', event_track_path(@event,track) %></td>
-    <td><%= link_to 'Edit', edit_event_track_path(@event,track) %></td>
-    <td><%= link_to 'Destroy', event_track_path(@event,track), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Show', track %></td>
+    <td><%= link_to 'Edit', edit_track_path(track) %></td>
+    <td><%= link_to 'Destroy', track, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Track', new_event_track_path %>
+<%= link_to 'New Track', new_track_path %>

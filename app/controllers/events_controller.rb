@@ -2,7 +2,7 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.paginate(:page => params[:page])
+    @events = Event.all#order(:date,:venue_id)#.paginate(:page => params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -80,4 +80,5 @@ class EventsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
 end

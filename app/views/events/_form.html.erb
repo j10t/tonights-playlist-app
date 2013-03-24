@@ -12,8 +12,8 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :date %><br />
-    <%= f.text_field :date %>
+    <%= f.label :datetime %><br />
+    <%= f.text_field :datetime %>
   </div>
   <div class="field">
     <%= f.label :skbuyurl %><br />
@@ -22,6 +22,10 @@
   <div class="field">
     <%= f.label :additionaldetails %><br />
     <%= f.text_field :additionaldetails %>
+  </div>
+  <div class="field">
+    <%= f.label :venue_id, "venue_id" %><br />
+    <%= f.text_field :venue_id %>
   </div>
   <div class="actions">
     <%= f.submit %>

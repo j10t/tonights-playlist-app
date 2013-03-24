@@ -1,8 +1,14 @@
 class Track < ActiveRecord::Base
-  belongs_to :event, :foreign_key => 'event_id'
+  belongs_to :artist, :foreign_key => 'artist_id'
 
-  attr_accessible :album, :artist, :event_id, :name, :source, :sourceid
+  attr_accessible :name,:album,:source,:sourceid,:artist_id
 
-  validates :event_id, presence: true
-  validates :artist , presence: true
+  validates :artist_id, presence: true
+  validates :name, presence: true
+  validates :source, presence: true
+  validates :sourceid, presence: true
+
+  #only one sourceid per artist - could potentially have same vid be for multiple artists tho
+  validates_uniqueness_of :sourceid, :scope => :artist_id
+
 end

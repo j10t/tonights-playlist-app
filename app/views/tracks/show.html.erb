@@ -1,20 +1,18 @@
 <style>*,h1{color:white;}</style>
 <table>
   <tr>
-    <th>Artist</th>
     <th>Name</th>
+    <th>Album</th>
     <th>Source</th>
     <th>Sourceid</th>
-    <th>Album</th>
-    <th>Headliner</th>
+    <th>Artist_id</th>
   </tr>
   <tr>
-    <td><%= @track.artist %></td>
     <td><%= @track.name %></td>
+    <td><%= @track.album %></td>
     <td><%= @track.source %></td>
     <td><%= @track.sourceid %></td>
-    <td><%= @track.album %></td>
-    <td><%= @track.headliner %></td>
+    <td><%= @track.artist_id %></td>
   </tr>
 </table>
-<%= link_to 'Back', event_tracks_path(@event) %>
+<%= link_to 'Back', tracks_path %>

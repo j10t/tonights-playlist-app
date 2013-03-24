@@ -1,0 +1,29 @@
+<%= form_for(@eventartist) do |f| %>
+  <% if @eventartist.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@eventartist.errors.count, "error") %> prohibited this eventartist from being saved:</h2>
+
+      <ul>
+      <% @eventartist.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :event_id, "event_id" %><br />
+    <%= f.text_field :event_id %>
+  </div>
+  <div class="field">
+    <%= f.label :artist_id, "artist_id" %><br />
+    <%= f.text_field :artist_id %>
+  </div>
+  <div class="field">
+    <%= f.label :headliner %><br />
+    <%= f.text_field :headliner %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

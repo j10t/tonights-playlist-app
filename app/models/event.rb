@@ -1,9 +1,13 @@
 class Event < ActiveRecord::Base
-  has_many :tracks, :dependent => :destroy
-  belongs_to :venues, :foreign_key => 'venue_id'
+  belongs_to :venue, :foreign_key => 'venue_id'
+  has_many :eventartists, foreign_key: "event_id", :dependent => :destroy
+  has_many :artists, :through => :eventartists
 
-  attr_accessible :city, :date, :fulladdress, :streetaddress, :venue, :zip, :skbuyurl, :venue_id
+  attr_accessible :datetime, :skbuyurl, :additionaldetails,:venue_id
 
-  validates :venue, presence: true
-  validates :skbuyurl, uniqueness: true
+  validates :venue_id, presence: true
+  validates :datetime, presence: true
+  #only one event per venue per day
+  validates_uniqueness_of :datetime, :scope => :venue_id
+  validates :skbuyurl, uniqueness: true, :allow_nil => true
 end

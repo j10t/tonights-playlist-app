@@ -11,15 +11,33 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121130004650) do
+ActiveRecord::Schema.define(:version => 20121203225526) do
+
+  create_table "artists", :force => true do |t|
+    t.string    "name"
+    t.timestamp "created_at", :null => false
+    t.timestamp "updated_at", :null => false
+  end
+
+  create_table "eventartists", :force => true do |t|
+    t.integer   "event_id"
+    t.integer   "artist_id"
+    t.timestamp "created_at", :null => false
+    t.timestamp "updated_at", :null => false
+    t.boolean   "headliner"
+  end
+
+  add_index "eventartists", ["artist_id"], :name => "index_eventartists_on_artist_id"
+  add_index "eventartists", ["event_id", "artist_id"], :name => "index_eventartists_on_event_id_and_artist_id", :unique => true
+  add_index "eventartists", ["event_id"], :name => "index_eventartists_on_event_id"
 
   create_table "events", :force => true do |t|
-    t.string   "date"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.string   "skbuyurl"
     t.text     "additionaldetails"
     t.integer  "venue_id"
+    t.datetime "datetime"
   end
 
   create_table "tracks", :force => true do |t|
@@ -27,22 +45,20 @@ ActiveRecord::Schema.define(:version => 20121130004650) do
     t.string    "sourceid"
     t.string    "name"
     t.string    "album"
-    t.string    "artist"
-    t.integer   "event_id"
     t.timestamp "created_at", :null => false
     t.timestamp "updated_at", :null => false
-    t.boolean   "headliner"
+    t.integer   "artist_id"
   end
 
   create_table "venues", :force => true do |t|
-    t.string   "name"
-    t.string   "streetaddress"
-    t.string   "city"
-    t.string   "zip"
-    t.string   "fulladdress"
-    t.string   "url"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.string    "name"
+    t.string    "streetaddress"
+    t.string    "city"
+    t.string    "zip"
+    t.string    "fulladdress"
+    t.string    "url"
+    t.timestamp "created_at",    :null => false
+    t.timestamp "updated_at",    :null => false
   end
 
 end
