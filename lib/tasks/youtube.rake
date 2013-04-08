@@ -13,7 +13,7 @@ namespace :data do
       artists.each do |artist|
         url = 'https://gdata.youtube.com/feeds/api/videos?q=%22'+URI::encode(artist.name)+'%22&max-results=1&alt=json&orderby=relevance&category=music&v=2'
         result = JSON.parse(open(url).read)
-        if result['feed']['openSearch$totalResults']['$t']==0
+        if result['feed']['openSearch$totalResults']['$t']==0 || result['feed']['entry'].nil?
           puts "Error: No search results for #{artist.name}"
         else
           title    = result['feed']['entry'].first['title']['$t']
