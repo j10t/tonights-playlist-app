@@ -1,1 +1,3 @@
 Code for http://www.tonightsplaylist.com
+
+Built in 2 days for Startup Weekend Seattle 2012.
