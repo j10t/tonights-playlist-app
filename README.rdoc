@@ -1,3 +1,5 @@
 Code for http://www.tonightsplaylist.com
 
 Built in 2 days for Startup Weekend Seattle 2012.
+
+Scrapes data from SongKick and YouTube to automatically create playlists of tonight's live music (in Seattle).
