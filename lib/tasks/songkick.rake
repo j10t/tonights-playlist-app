@@ -4,13 +4,13 @@ namespace :data do
   desc "Add Seattle songkick events"
   task :songkicksea, [:start_page, :stop_page] => :environment do |t, args|
     Timeout.timeout(900) do #timeout after 15 minutes to avoid high heroku bill
-      args.with_defaults(:start_page => 1, :stop_page => 5)
+      args.with_defaults(:start_page => 1, :stop_page => 2)
 
       require 'open-uri'
       require 'nokogiri'
       require 'date'
 
-      baseurl = "http://www.songkick.com"
+      baseurl = "https://www.songkick.com"
 
       buyurls = []
       puts "saving buyurls..."
@@ -33,7 +33,6 @@ namespace :data do
         return text
       end
 
-
       event_count = 1
       page_count  = 1
       #loop through buyurls
@@ -52,25 +51,36 @@ namespace :data do
         doc = Nokogiri::HTML(open(baseurl+buyurl['href'], "UserAgent" => "Mozilla/6.0 (Windows NT 6.2; WOW64; rv:16.0.1) Gecko/20121011 Firefox/16.0.1"))
 
         #parse date
-        if doc.css('.vevent h2').empty?
+        if doc.css('time[itemprop]').empty?
           puts "Error parsing date for #{baseurl+buyurl['href']}" 
           next
         else
-          date_ary = doc.css('.vevent h2').text.strip.split(' ')
-          month    = sprintf('%02d',Date::MONTHNAMES.index(date_ary[2])).to_i
-          day      = date_ary[1].to_i
-          year     = date_ary[3].to_i
+          date_str    = doc.css('time[itemprop]').first.attributes['datetime'].value  # format "2013-09-14"
+          date_array  = date_str.split('-')
+          year     = date_array[0].to_i
+          month    = date_array[1].to_i
+          day      = date_array[2].to_i
           datetime = DateTime.new(year,month,day)
         end
 
         #parse venue
-        venue_name = store_field(doc,'.org a')
+        loc = doc.css('.location')
+        if loc.nil?
+          puts "Error parsing venue location for #{baseurl+buyurl['href']}"
+        else
+          venue_name = loc.css('a').first.text unless loc.css('a').first.nil?
 
-        #parse address
-        street_address = store_field(doc, '.street-address')
-        postal_code = store_field(doc, '.postal-code')
-        locality = store_field(doc, '.locality')
-        city = locality.split(',')[0]
+          #parse address
+          adr = loc.css('.adr')
+          if !adr.nil?
+            puts "Error parsing venue address for #{baseurl+buyurl['href']}"
+          else
+            street_address = adr.css('.street-address').text unless adr.css('.street-address').nil?
+            postal_code = adr.css('.postal-code').text unless adr.css('.postal-code').nil?
+            locality = adr.css('.locality').text unless adr.css('.locality').nil?
+            city = locality.split(',').first
+          end
+        end
 
         #parse additional details
         additional_details_ary = doc.css('.additional-details')
@@ -81,7 +91,6 @@ namespace :data do
         end
 
         ########### Start storing in database ###########
-        
         #check for venue
         v=Venue.find_by_name(venue_name)
         #create venue if one doesn't exist
@@ -91,8 +100,8 @@ namespace :data do
             ven.streetaddress = street_address
             ven.city          = city
             ven.zip           = postal_code
-            ven.zip           = nil if postal_code.empty?
-            ven.fulladdress   = street_address+' '+locality+' '+postal_code
+            ven.zip           = nil if postal_code.nil? || postal_code.empty?
+            ven.fulladdress   = [street_address, locality, postal_code].join(' ')
             if ven.save
               puts "New venue: #{ven.name} saved"
             else
