@@ -66,7 +66,9 @@ function createYoutubeTrackController(trackIndex, trackData, tracklistController
 		stopPlaying: function() {
 			// Note: stop is a reserved word
 			this.isPlaying = false;
-			this.player.stopVideo();
+			if (this.player != null) {
+				this.player.stopVideo();
+			}
 			removeClass(document.getElementById("track" + this.trackIndex + "Artist"), "active");
 		},
 
