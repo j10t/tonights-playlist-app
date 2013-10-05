@@ -26,7 +26,7 @@ class HomeController < ApplicationController
       event['fulladdress'] = v.fulladdress;
       event['opentime'] = '';
       #convert military time to normal time and save in 'opentime' if we scraped an opening time
-      event['opentime'] = "Doors open: "+Time.strptime(e.additionaldetails.split("Doors open: ")[1], "%H:%M").strftime("%l:%M%P") if e.additionaldetails.include?("Doors open: ");
+#      event['opentime'] = "Doors open: "+Time.strptime(e.additionaldetails.split("Doors open: ")[1], "%H:%M").strftime("%l:%M%P") if e.additionaldetails.include?("Doors open: ");
       event['tracks'] = [];
 
       # build an event object and put it in the playlist
@@ -48,6 +48,11 @@ class HomeController < ApplicationController
 
     # randomize
     @playlist.shuffle!
+
+    respond_to do |format|
+      format.html  # index.html.erb
+      format.json  { render :json => @playlist }
+    end
 
   end
 
