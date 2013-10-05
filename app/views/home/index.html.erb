@@ -12,7 +12,6 @@
       <div class="playback-info">
         <p class="playback-name">
           <span id="artistName" class="playback-artist">Artist Name</span>
-          <span id="songTitle" class="playback-song">Song Name</span>
         </p>
         <p class="playback-event">
           <span id="venueName" class="playback-venue">Venue Name </span>
@@ -51,7 +50,6 @@
           <li class="artist" id="track<%= @trackIndex.to_s %>Artist">
             <a id="track<%= @trackIndex.to_s %>PlayPauseToggleButton" data-type="toggle-play" class="small-playback-button small-playback-play"></a>
             <h4 class="artist-name"><%= track['artist'] %></h4>
-            <h4 class="artist-song"><%= track['song_title'] %></h4>
           </li>
           <% @trackIndex = @trackIndex + 1; %>
         <% end %>
@@ -59,9 +57,10 @@
       </div>
       <div class="span4 venue">
       <h4 class=""><%= event['venue'] %></h4>
-      <p><%= event['opentime'] %><i class="icon-time"></i></p>
+      <% if !event['datetime'].nil? && !event['datetime'].empty? %>
+        <p><%= Time.parse(event['datetime'].to_s).strftime("%l:%M%P") %><i class="icon-time"></i></p>
+      <% end %>
       <p><a>Buy Tickets</a> <i class="icon-shopping-cart"></i></p>
-      <p><%= link_to "Directions", "http://maps.google.com/?q=#{URI.escape(event['fulladdress'])}", :target => "_blank" %> <i class="icon-map-marker"></i></p>
       </div>
       </div>
     </div>

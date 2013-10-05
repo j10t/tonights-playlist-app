@@ -71,7 +71,6 @@ function createTracklistController(tracks) {
 		updateCurrentTrackInfo: function() {
 			var track = this.currentTrack();
 			document.getElementById("artistName").innerHTML = track.trackData.artist;
-			document.getElementById("songTitle").innerHTML = track.trackData.song_title;
 			document.getElementById("venueName").innerHTML = track.trackData.venue;
 		},
 

@@ -1,20 +1,20 @@
 TonightsPlaylistApp::Application.routes.draw do
 
+  root :to                    => 'home#index'
+
+  match '/home'               => 'home#index'
+  match "/:year-:month-:day"  => "home#index"
+  match "/:month/:day/:year"  => "home#index"
+  match "artistswotracks"     => "artists#wotracks", :as => :wotracks_artists
+
   get "static_pages/home"
   get "home/index"
 
-  root :to => 'home#index'
-
   resources :artists
-  match "artistswotracks" => "artists#wotracks", :as => :wotracks_artists
   resources :tracks
   resources :venues
   resources :events
   resources :eventartists
-
- 
-  match "/:year-:month-:day" => "home#index"
-  match "/:month/:day/:year" => "home#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -11,7 +11,7 @@ namespace :data do
       artists = Artist.joins("left join tracks on tracks.artist_id = artists.id").where("tracks.artist_id is null").order(:name)
 
       artists.each do |artist|
-        url = 'https://gdata.youtube.com/feeds/api/videos?q=%22'+URI::encode(artist.name)+'%22&max-results=1&alt=json&orderby=relevance&category=music&v=2'
+        url = 'http://gdata.youtube.com/feeds/api/videos/-/%7Bhttp%3A%2F%2Fgdata.youtube.com%2Fschemas%2F2007%2Fcategories.cat%7DMusic?max-results=1&alt=json&q=%22'+URI::encode(artist.name)+'%22&format=5&safeSearch=none&v=2'
         result = JSON.parse(open(url).read)
         if result['feed']['openSearch$totalResults']['$t']==0 || result['feed']['entry'].nil?
           puts "Error: No search results for #{artist.name}"

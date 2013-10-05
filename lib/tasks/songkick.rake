@@ -4,7 +4,7 @@ namespace :data do
   desc "Add Seattle songkick events"
   task :songkicksea, [:start_page, :stop_page] => :environment do |t, args|
     Timeout.timeout(900) do #timeout after 15 minutes to avoid high heroku bill
-      args.with_defaults(:start_page => 1, :stop_page => 2)
+      args.with_defaults(:start_page => 1, :stop_page => 5)
 
       require 'open-uri'
       require 'nokogiri'
